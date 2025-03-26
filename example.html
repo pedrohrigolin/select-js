@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <script src="selectJS.js"></script>
+        <style>
+
+            html {
+                padding: 0;
+            }
+
+            html, body {
+                height: 100%;
+                min-height: 100vh;
+                width: 100vw;
+                max-width: 100vw;
+                margin: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                position: relative;
+                padding: 20px;
+                top: 0;
+            }
+
+        </style>
+    </head>
+
+    <body>
+
+        <select class="test selectJS" name="selectJS" selectJS-id="selectJS" selectJS-empty="true" placeholder="Select an option" required>
+              <option value="1" selected>Option 1</option>
+              <option value="2">Option 2</option>
+              <option value="3">Option 3</option>
+              <option value="4">Option 4</option>
+              <option value="5">Option 5</option>
+              <option value="6">Option 6</option>
+              <option value="7">Option 7</option>
+              <option value="8">Option 8</option>
+              <option value="9">Option 9</option>
+              <option value="10">Option 10</option>
+              <option value="11">Option 11</option>
+              <option value="12">Option 12</option>
+              <option value="13">Option 13</option>
+              <option value="14">Option 14</option>
+              <option value="15">Option 15</option>
+              <option value="16">Option 16</option>
+              <option value="17">Option 17</option>
+              <option value="18">Option 18</option>
+              <option value="19">Option 19</option>
+              <option value="20">Option 20</option>
+        </select>
+
+        <select class="selectJS" name="selectJS2" selectJS-id="selectJS2" selectJS-empty="false" placeholder="Select an option" required>
+            <optgroup label="Group A">
+              <option value="1">Option 1</option>
+              <option value="2">Option 2</option>
+              <option value="3">Option 3</option>
+              <option value="4">Option 4</option>
+              <option value="5">Option 5</option>
+              <option value="6">Option 6</option>
+              <option value="7">Option 7</option>
+              <option value="8">Option 8</option>
+              <option value="9">Option 9</option>
+              <option value="10">Option 10</option>
+            </optgroup>
+            <optgroup label="Group B">
+              <option value="11">Option 11</option>
+              <option value="12">Option 12</option>
+              <option value="13">Option 13</option>
+              <option value="14">Option 14</option>
+              <option value="15">Option 15</option>
+              <option value="16">Option 16</option>
+              <option value="17">Option 17</option>
+              <option value="18">Option 18</option>
+              <option value="19">Option 19</option>
+              <option value="20">Option 20</option>
+            </optgroup>
+            <optgroup label="Group C">
+              <option value="21">Option 21</option>
+              <option value="22">Option 22</option>
+              <option value="23">Option 23</option>
+              <option value="24">Option 24</option>
+              <option value="25">Option 25</option>
+              <option value="26">Option 26</option>
+              <option value="27">Option 27</option>
+              <option value="28">Option 28</option>
+              <option value="29">Option 29</option>
+              <option value="30">Option 30</option>
+            </optgroup>
+        </select>
+
+        <script>
+            selectJS.all()
+        </script>
+
+    </body>
+
+</html>
