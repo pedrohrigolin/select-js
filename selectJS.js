@@ -3,7 +3,10 @@
 shortPattern:/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i,tabletPattern:/android|ipad|playbook|silk/i};var h,i=Object.prototype.hasOwnProperty;return g.FALLBACK_PHONE="UnknownPhone",g.FALLBACK_TABLET="UnknownTablet",g.FALLBACK_MOBILE="UnknownMobile",h="isArray"in Array?Array.isArray:function(a){return"[object Array]"===Object.prototype.toString.call(a)},function(){var a,b,c,e,f,j,k=g.mobileDetectRules;for(a in k.props)if(i.call(k.props,a)){for(b=k.props[a],h(b)||(b=[b]),f=b.length,e=0;e<f;++e)c=b[e],j=c.indexOf("[VER]"),j>=0&&(c=c.substring(0,j)+"([\\w._\\+]+)"+c.substring(j+5)),b[e]=new RegExp(c,"i");k.props[a]=b}d(k.oss),d(k.phones),d(k.tablets),d(k.uas),d(k.utils),k.oss0={WindowsPhoneOS:k.oss.WindowsPhoneOS,WindowsMobileOS:k.oss.WindowsMobileOS}}(),g.findMatch=function(a,b){for(var c in a)if(i.call(a,c)&&a[c].test(b))return c;return null},g.findMatches=function(a,b){var c=[];for(var d in a)i.call(a,d)&&a[d].test(b)&&c.push(d);return c},g.getVersionStr=function(a,b){var c,d,e,f,h=g.mobileDetectRules.props;if(i.call(h,a))for(c=h[a],e=c.length,d=0;d<e;++d)if(f=c[d].exec(b),null!==f)return f[1];return null},g.getVersion=function(a,b){var c=g.getVersionStr(a,b);return c?g.prepareVersionNo(c):NaN},g.prepareVersionNo=function(a){var b;return b=a.split(/[a-z._ \/\-]/i),1===b.length&&(a=b[0]),b.length>1&&(a=b[0]+".",b.shift(),a+=b.join("")),Number(a)},g.isMobileFallback=function(a){return g.detectMobileBrowsers.fullPattern.test(a)||g.detectMobileBrowsers.shortPattern.test(a.substr(0,4))},g.isTabletFallback=function(a){return g.detectMobileBrowsers.tabletPattern.test(a)},g.prepareDetectionCache=function(a,c,d){if(a.mobile===b){var e,h,i;return(h=g.findMatch(g.mobileDetectRules.tablets,c))?(a.mobile=a.tablet=h,void(a.phone=null)):(e=g.findMatch(g.mobileDetectRules.phones,c))?(a.mobile=a.phone=e,void(a.tablet=null)):void(g.isMobileFallback(c)?(i=f.isPhoneSized(d),i===b?(a.mobile=g.FALLBACK_MOBILE,a.tablet=a.phone=null):i?(a.mobile=a.phone=g.FALLBACK_PHONE,a.tablet=null):(a.mobile=a.tablet=g.FALLBACK_TABLET,a.phone=null)):g.isTabletFallback(c)?(a.mobile=a.tablet=g.FALLBACK_TABLET,a.phone=null):a.mobile=a.tablet=a.phone=null)}},g.mobileGrade=function(a){var b=null!==a.mobile();return a.os("iOS")&&a.version("iPad")>=4.3||a.os("iOS")&&a.version("iPhone")>=3.1||a.os("iOS")&&a.version("iPod")>=3.1||a.version("Android")>2.1&&a.is("Webkit")||a.version("Windows Phone OS")>=7||a.is("BlackBerry")&&a.version("BlackBerry")>=6||a.match("Playbook.*Tablet")||a.version("webOS")>=1.4&&a.match("Palm|Pre|Pixi")||a.match("hp.*TouchPad")||a.is("Firefox")&&a.version("Firefox")>=12||a.is("Chrome")&&a.is("AndroidOS")&&a.version("Android")>=4||a.is("Skyfire")&&a.version("Skyfire")>=4.1&&a.is("AndroidOS")&&a.version("Android")>=2.3||a.is("Opera")&&a.version("Opera Mobi")>11&&a.is("AndroidOS")||a.is("MeeGoOS")||a.is("Tizen")||a.is("Dolfin")&&a.version("Bada")>=2||(a.is("UC Browser")||a.is("Dolfin"))&&a.version("Android")>=2.3||a.match("Kindle Fire")||a.is("Kindle")&&a.version("Kindle")>=3||a.is("AndroidOS")&&a.is("NookTablet")||a.version("Chrome")>=11&&!b||a.version("Safari")>=5&&!b||a.version("Firefox")>=4&&!b||a.version("MSIE")>=7&&!b||a.version("Opera")>=10&&!b?"A":a.os("iOS")&&a.version("iPad")<4.3||a.os("iOS")&&a.version("iPhone")<3.1||a.os("iOS")&&a.version("iPod")<3.1||a.is("Blackberry")&&a.version("BlackBerry")>=5&&a.version("BlackBerry")<6||a.version("Opera Mini")>=5&&a.version("Opera Mini")<=6.5&&(a.version("Android")>=2.3||a.is("iOS"))||a.match("NokiaN8|NokiaC7|N97.*Series60|Symbian/3")||a.version("Opera Mobi")>=11&&a.is("SymbianOS")?"B":(a.version("BlackBerry")<5||a.match("MSIEMobile|Windows CE.*Mobile")||a.version("Windows Mobile")<=5.2,"C")},g.detectOS=function(a){return g.findMatch(g.mobileDetectRules.oss0,a)||g.findMatch(g.mobileDetectRules.oss,a)},g.getDeviceSmallerSide=function(){return window.screen.width<window.screen.height?window.screen.width:window.screen.height},f.prototype={constructor:f,mobile:function(){return g.prepareDetectionCache(this._cache,this.ua,this.maxPhoneWidth),this._cache.mobile},phone:function(){return g.prepareDetectionCache(this._cache,this.ua,this.maxPhoneWidth),this._cache.phone},tablet:function(){return g.prepareDetectionCache(this._cache,this.ua,this.maxPhoneWidth),this._cache.tablet},userAgent:function(){return this._cache.userAgent===b&&(this._cache.userAgent=g.findMatch(g.mobileDetectRules.uas,this.ua)),this._cache.userAgent},userAgents:function(){return this._cache.userAgents===b&&(this._cache.userAgents=g.findMatches(g.mobileDetectRules.uas,this.ua)),this._cache.userAgents},os:function(){return this._cache.os===b&&(this._cache.os=g.detectOS(this.ua)),this._cache.os},version:function(a){return g.getVersion(a,this.ua)},versionStr:function(a){return g.getVersionStr(a,this.ua)},is:function(b){return c(this.userAgents(),b)||a(b,this.os())||a(b,this.phone())||a(b,this.tablet())||c(g.findMatches(g.mobileDetectRules.utils,this.ua),b)},match:function(a){return a instanceof RegExp||(a=new RegExp(a,"i")),a.test(this.ua)},isPhoneSized:function(a){return f.isPhoneSized(a||this.maxPhoneWidth)},mobileGrade:function(){return this._cache.grade===b&&(this._cache.grade=g.mobileGrade(this)),this._cache.grade}},"undefined"!=typeof window&&window.screen?f.isPhoneSized=function(a){return a<0?b:g.getDeviceSmallerSide()<=a}:f.isPhoneSized=function(){},f._impl=g,f.version="1.4.5 2021-03-13",f})}(function(a){if("undefined"!=typeof module&&module.exports)return function(a){module.exports=a()};if("function"==typeof define&&define.amd)return define;if("undefined"!=typeof window)return function(a){window.MobileDetect=a()};throw new Error("unknown environment")}());
 
 /* END OF MOBILE-DETECT.JS */
-
+/**
+ * @author Pedro Rigolin 
+ * @link https://github.com/pedrohrigolin/selectJS
+*/
 class selectJS {
 
     static all(){
@@ -11,662 +14,714 @@ class selectJS {
         const selects = Array.from( document.querySelectorAll('select.selectJS') )
 
         selects.map((el) => {
-            
-            let hiddenInput = document.createElement('input')
-            hiddenInput.setAttribute('type', 'hidden')
-            
-            if(el.hasAttribute('name')){
-                hiddenInput.setAttribute('name', el.getAttribute('name'))
-            }
-
-            if(el.hasAttribute('selectJS-id')){
-                hiddenInput.setAttribute('id', el.getAttribute('selectJS-id'))
-            }
-            
-            let searchInput = document.createElement('input')
-            searchInput.setAttribute('type', 'text')
-            searchInput.setAttribute('spellcheck', 'false')
-
-            if(el.hasAttribute('placeholder')){
-                searchInput.setAttribute('placeholder', el.getAttribute('placeholder'))
-            }
-            
-            if(el.required){
-                searchInput.required = true
-                el.required = false
-            }
-
-            let searchInputModal = document.createElement('input')
-            searchInputModal.setAttribute('type', 'text')
-            searchInputModal.setAttribute('spellcheck', 'false')
-
-            if(el.hasAttribute('placeholder')){
-                searchInputModal.setAttribute('placeholder', el.getAttribute('placeholder'))
-            }
-
-            let divSelect = document.createElement('div')
-
-            let attr = el.getAttributeNames()
-
-            attr.map((atr) => {
-                divSelect.setAttribute(atr, el.getAttribute(atr))
-            })
+            this.#contructModal(el)
+        })
 
-            if(divSelect.hasAttribute('name')){
-                divSelect.removeAttribute('name')
-            }
+    }
 
-            if(divSelect.hasAttribute('selectJS-id')){
-                divSelect.removeAttribute('selectJS-id')
-            }
-
-            if(divSelect.hasAttribute('placeholder')){
-                divSelect.removeAttribute('placeholder')
-            }
-
-            divSelect.append(hiddenInput)
-            divSelect.append(searchInput)
-
-            let divModal = document.createElement('div')
-            divModal.setAttribute('class', 'selectJS-modal')
-
-            if(el.hasAttribute('selectJS-modalID')){
-                divModal.setAttribute('id', el.getAttribute('selectJS-modalID'))
-            }
-
-            let modalBox = document.createElement('div')
-            modalBox.setAttribute('class', 'selectJS-modalBox')
-
-            if(el.hasAttribute('selectJS-modalBoxID')){
-                modalBox.setAttribute('id', el.getAttribute('selectJS-modalBoxID'))
-            }
-
-            divModal.append(modalBox)
-
-            let span = document.createElement('span')
-            span.setAttribute('class', 'selectJS-modalClose')
-            span.innerHTML = '&times;'
-
-            modalBox.append(span)
-            modalBox.append(searchInputModal)
-
-            let container = document.createElement('div')
-            container.setAttribute('class', 'selectJS-container')
-            
-            divSelect.append(container)
-            
-            let containerModal = document.createElement('div')
-            containerModal.setAttribute('class', 'selectJS-modalContainer')
-
-            modalBox.append(containerModal)
-
-            divSelect.append(divModal)
-
-            let childs = Array.from( el.children )
-
-            childs.map((children) => {
-
-                if(children.nodeName === 'OPTGROUP'){
-                    
-                    let optgdiv = document.createElement('div')
-                    
-                    optgdiv.setAttribute('class', 'selectJS-optgroup')
-
-                    let optgdivModal = document.createElement('div')
-                    
-                    optgdivModal.setAttribute('class', 'selectJS-modalOptgroup')
-                    
-                    let attr = children.getAttributeNames()
-
-                    attr.map((atr) => {
-                        optgdiv.setAttribute(atr, children.getAttribute(atr))
-                        optgdivModal.setAttribute(atr, children.getAttribute(atr))
-                    })
-
-                    if(children.hasAttribute('label')){
-                        let p = document.createElement('p')
-                        p.setAttribute('class', 'selectJS-optgroupTitle')
-                        let textNode = document.createTextNode(children.getAttribute('label'))
-                        p.append(textNode)
-                        optgdiv.append(p)
-                        p = document.createElement('p')
-                        p.setAttribute('class', 'selectJS-modalOptgroupTitle')
-                        textNode = document.createTextNode(children.getAttribute('label'))
-                        p.append(textNode)
-                        optgdivModal.append(p)
-                    }
-
-                    if(children.querySelector('option') !== null){
-
-                        let option = Array.from( children.querySelectorAll('option') )
-
-                        option.map((opt) => {
-
-                            let optdiv = document.createElement('div')
-
-                            optdiv.setAttribute('class', 'selectJS-option')
-
-                            let optdivModal = document.createElement('div')
-
-                            optdivModal.setAttribute('class', 'selectJS-modalOption')
-
-                            let attr = opt.getAttributeNames()
-
-                            attr.map((atr) => {
-                                if(atr === 'selected'){
-                                    searchInput.value = opt.textContent
-                                    hiddenInput.value = opt.value
-                                    optdiv.setAttribute(atr, opt.getAttribute(atr))
-                                    optdivModal.setAttribute(atr, opt.getAttribute(atr))
-                                }
-                                else{
-                                    optdiv.setAttribute(atr, opt.getAttribute(atr))
-                                    optdivModal.setAttribute(atr, opt.getAttribute(atr))
-                                }
-                            })
-                           
-                            let textContent = document.createTextNode(opt.textContent)
-                            optdiv.append(textContent)
-
-                            textContent = document.createTextNode(opt.textContent)
-                            optdivModal.append(textContent)
-
-                            optgdiv.append(optdiv)
-                            optgdivModal.append(optdivModal)
-
-                        })
-
-                        container.append(optgdiv)
-                        containerModal.append(optgdivModal)
-
-                    }
-                    else{
-                        container.append(optgdiv)
-                        containerModal.append(optgdivModal)
-                    }
-    
-                }
-                else if(children.nodeName === 'OPTION'){
-    
-                    let optdiv = document.createElement('div')
-    
-                    optdiv.setAttribute('class', 'selectJS-option')
-
-                    let optdivModal = document.createElement('div')
-
-                    optdivModal.setAttribute('class', 'selectJS-modalOption')
-    
-                    let attr = children.getAttributeNames()
-    
-                    attr.map((atr) => {
+    static element(el){
+        this.#contructModal(el)
+    }
 
-                        if(atr === 'selected'){
-                            searchInput.value = children.textContent
-                            hiddenInput.value = children.value
-                            optdiv.setAttribute(atr, children.getAttribute(atr))
-                            optdivModal.setAttribute(atr, children.getAttribute(atr))
-                        }
-                        else{
-                            optdiv.setAttribute(atr, children.getAttribute(atr))
-                            optdivModal.setAttribute(atr, children.getAttribute(atr))
-                        }
+    static #contructModal(el){
 
-                    })
-                   
-                    let textContent = document.createTextNode(children.textContent)
-                    optdiv.append(textContent)
+        let hiddenInput = document.createElement('input')
+        hiddenInput.setAttribute('type', 'hidden')
+        
+        if(el.hasAttribute('name')){
+            hiddenInput.setAttribute('name', el.getAttribute('name'))
+        }
 
-                    textContent = document.createTextNode(children.textContent)
-                    optdivModal.append(textContent)
-    
-                    container.append(optdiv)
-                    containerModal.append(optdivModal)
-    
-                }
-    
-            })
+        if(el.hasAttribute('selectJS-id')){
+            hiddenInput.setAttribute('id', el.getAttribute('selectJS-id'))
+        }
+        
+        let searchInput = document.createElement('input')
+        searchInput.setAttribute('type', 'text')
+        searchInput.setAttribute('spellcheck', 'false')
 
-            let style = ''
+        if(el.hasAttribute('placeholder')){
+            searchInput.setAttribute('placeholder', el.getAttribute('placeholder'))
+        }
+        
+        if(el.required){
+            searchInput.required = true
+            el.required = false
+        }
 
-            style = style.concat(' ', 'position: relative !important;', ' ')
+        let searchInputModal = document.createElement('input')
+        searchInputModal.setAttribute('type', 'text')
+        searchInputModal.setAttribute('spellcheck', 'false')
 
-            divSelect.setAttribute('style', style)
+        if(el.hasAttribute('placeholder')){
+            searchInputModal.setAttribute('placeholder', el.getAttribute('placeholder'))
+        }
 
-            style = ''
+        let divSelect = document.createElement('div')
 
-            style = style.concat(' ', 'max-height: 0 !important;')
-            style = style.concat(' ', 'min-height: 0 !important;')
-            style = style.concat(' ', 'border-width: 0 !important;')
-            style = style.concat(' ', 'position: absolute !important;')
-            style = style.concat(' ', 'overflow: hidden !important;')
-            style = style.concat(' ', 'z-index: -10 !important;')
-            style = style.concat(' ', 'visibility: hidden !important;')
-            style = style.concat(' ', 'outline: 0;', ' ')
+        let attr = el.getAttributeNames()
 
-            container.setAttribute('style', style)
+        attr.map((atr) => {
+            divSelect.setAttribute(atr, el.getAttribute(atr))
+        })
 
-            style = ''
-            
-            style = style.concat(' ', 'display: none !important;')
-            style = style.concat(' ', 'position: fixed !important;', ' ')
-            style = style.concat(' ', 'z-index:10000 !important;', ' ')
-            style = style.concat(' ', 'left: 0 !important;', ' ')
-            style = style.concat(' ', 'top: 0 !important;', ' ')
-            style = style.concat(' ', 'width: 100% !important;', ' ')
-            style = style.concat(' ', 'min-width: 100vw !important;', ' ')
-            style = style.concat(' ', 'max-width: 100vw !important;', ' ')
-            style = style.concat(' ', 'height: 100% !important;', ' ')
-            style = style.concat(' ', 'min-height: 100vh !important;', ' ')
-            style = style.concat(' ', 'max-height: 100vh !important;', ' ')
+        if(divSelect.hasAttribute('name')){
+            divSelect.removeAttribute('name')
+        }
 
-            divModal.setAttribute('style', style)
+        if(divSelect.hasAttribute('selectJS-id')){
+            divSelect.removeAttribute('selectJS-id')
+        }
 
-            style = ''
+        if(divSelect.hasAttribute('placeholder')){
+            divSelect.removeAttribute('placeholder')
+        }
 
-            style = style.concat(' ', 'position: relative !important;', ' ')
+        divSelect.append(hiddenInput)
+        divSelect.append(searchInput)
 
-            modalBox.setAttribute('style', style)
+        let divModal = document.createElement('div')
+        divModal.setAttribute('class', 'selectJS-modal')
 
-            if(document.styleSheets.length > 0) { var i = 0; } else{ style = document.createElement('style'); }
-            
-            let styleText = ''
-            
-            styleText = '.selectJS{ \n\tbox-sizing: border-box; \n\toutline: 0; \n\twidth: 350px; margin-bottom: 20px; \n\tfont-family: Arial, sans-serif; \n}\n'
+        if(el.hasAttribute('selectJS-modalID')){
+            divModal.setAttribute('id', el.getAttribute('selectJS-modalID'))
+        }
 
-            if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+        let modalBox = document.createElement('div')
+        modalBox.setAttribute('class', 'selectJS-modalBox')
 
-            styleText = '.selectJS input[type="text"]{ \n\toutline: 0; \n\twidth: 100%; \n\tpadding: 10px 30px 10px 8px; \n\tbox-sizing: border-box; \n\tborder: 1px solid #ccc; \n\tborder-radius: 5px; \n\tfont-size: 16px; \n\tbackground-color: #fff; \n\tcursor: pointer; \t\t-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075); \n\tbox-shadow: inset 0 1px 1px rgba(0, 0, 0, .075); \n\ttransition-duration: 200ms; \n\ttransition-timing-function: ease-in-out; \n}\n'
+        if(el.hasAttribute('selectJS-modalBoxID')){
+            modalBox.setAttribute('id', el.getAttribute('selectJS-modalBoxID'))
+        }
 
-            if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-            
-            styleText = '.selectJS::after{ \n\tbox-sizing: border-box; \n\toutline: 0; \n\tcontent: "\\276E"; \n\tposition: absolute; \n\ttop: 50%; \n\tright: 10px; \n\ttransform: translateY(-50%) rotate(-90deg); \n\tpointers-events: none; \n\tfont-size: 12px; \n\tcolor: #555; \n\ttransition-duration: 200ms; \n\ttransition-timing-function: ease-in-out; \n\tpointer-events: none; \n}\n'
+        divModal.append(modalBox)
 
-            if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+        let span = document.createElement('span')
+        span.setAttribute('class', 'selectJS-modalClose')
+        span.innerHTML = '&times;'
 
-            styleText = '.selectJS.open::after{ \n\tbox-sizing: border-box; \n\toutline: 0; \n\ttransform: translateY(-50%) rotate(90deg); \n\ttransition-duration: 200ms; \n\ttransition-timing-function: ease-in-out; \n}\n'
+        modalBox.append(span)
+        modalBox.append(searchInputModal)
 
-            if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+        let container = document.createElement('div')
+        container.setAttribute('class', 'selectJS-container')
+        
+        divSelect.append(container)
+        
+        let containerModal = document.createElement('div')
+        containerModal.setAttribute('class', 'selectJS-modalContainer')
 
-            styleText = '.selectJS-container{ \n\tbox-sizing: border-box; \n\toutline: 0; \n\twidth: 100%; \n\tscrollbar-width: thin; \n\ttransition-duration: 200ms; \n\ttransition-timing-function: ease-in-out; \n}\n'
+        modalBox.append(containerModal)
 
-            if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+        divSelect.append(divModal)
 
-            styleText = '.selectJS.open .selectJS-container{ \n\tbox-sizing: border-box; \n\toutline: 0; \n\tborder-radius: 0 0 4px 4px; \n\tbox-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); \n\tbackground-color: #fff; \n}\n'
+        let childs = Array.from( el.children )
 
-            if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+        childs.map((children) => {
 
-            styleText = '.selectJS-option{ \n\tbox-sizing: border-box; \n\tpadding: 10px; \n\tcursor: pointer; \n}\n'
-
-            if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-            styleText = '.selectJS-option:hover{ \n\tbox-sizing: border-box; \n\tbackground-color: #f0f0f0; \n}\n'
-
-            if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-            styleText = '.selectJS-optgroupTitle{ \n\tpadding-left: 10px; \n\tfont-weight: bold; \n}\n'
-
-            if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-            styleText = '.selectJS-optgroup .selectJS-option{ \n\tpadding-left: 20px; \n}\n'
-
-            if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-            styleText = '.selectJS-modal{ \n\tbox-sizing: border-box; \n\toverflow: auto; \n\tbackground-color: rgba(0, 0, 0, 0.5); \n\talign-content: center; \n}\n'
-
-            if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-            styleText = '.selectJS-modalBox{ \n\tbox-sizing: border-box; \n\tbackground-color: #fff; \n\tmargin: auto; \n\tpadding: 20px; \n\tpadding-top: 60px; \n\tpadding-bottom: 35px; \n\tborder: 1px solid #888; \n\twidth: 75vw; \n\tmax-width: 500px; \n\tmax-height: 90vh; \n\tborder-radius: 10px; \n\tposition: relative; \n}\n'
-
-            if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-            styleText = '.selectJS-modalClose{ \n\tcolor: #aaa; \n\tfloat: right; \n\tfont-size: 32px; \n\tfont-weight: bold; \n\tcursor: pointer; \n\tposition: absolute; \n\ttop: 10px; \n\tright: 15px; \n}\n'
-
-            if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-            styleText = '.selectJS-modalClose:hover, .selectJS-modalClose:focus{ \n\tcolor: black; \n\ttext-decoration: none; \n}\n'
-
-            if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-            styleText = '.selectJS-modalBox input[type="text"]{ \n\tbox-sizing: border-box; \n\twidth: 100%; \n\tpadding: 10px; \n\tborder: 1px solid #ccc; \n\tborder-radius: 5px; \n\tmargin-bottom: 10px; \n\tfont-size: 16px; \n}\n'
-
-            if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-            styleText = '.selectJS-modalContainer{ \n\tbox-sizing: border-box; \n\tmax-height: 65vh; \n\toverflow-y: auto; \n\tscrollbar-width: thin; \n}\n'
-
-            if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-            styleText = '.selectJS-modal .selectJS-modalOption{ \n\tbox-sizing: border-box; \n\t font-size: 20px; \n\tpadding: 25px; \n\tpadding-left: 10px; \n\tcursor: pointer; \n\tborder-top: 1px solid rgb(204, 204, 204); \n\tborder-bottom: 1px solid rgb(204, 204, 204); \n}\n'
-
-            if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-            styleText = '.selectJS-modal .selectJS-modalOption:hover{ \n\tbox-sizing: border-box; \n\tbackground-color: #f0f0f0; \n}\n'
-
-            if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-            styleText = '.selectJS-modal .selectJS-modalOptgroupTitle{ \n\tpadding-left: 10px; \n\t font-size: 20px; \n\tfont-weight: bold; \n}\n'
-
-            if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-            styleText = '.selectJS-modal .selectJS-modalOptgroup .selectJS-modalOption{ \n\tpadding-left: 20px; \n}\n'
-
-            if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); document.querySelector('head').append(style);}
-
-            searchInput.addEventListener('click', () => {
-
-                if(this.#mobileState()){
-
-                    if(divModal.style.display === 'none'){
-                        divModal.style.display = 'block'
-                    }
-
-                }
-                else{
-                    
-                    if(divSelect.classList.contains('open')){
-
-                        container.borderWidth = 0
-                        container.style.zIndex = -10
-                        container.style.visibility = 'hidden'
-                        container.style.maxHeight = 0
-                        container.style.overflowY = 'hidden'
-
-                        let marginTop = parseFloat( window.getComputedStyle(container).marginTop )
-                        let marginBottom = parseFloat( window.getComputedStyle(container).marginBottom )
-
-                        divSelect.classList.remove('open')
-                        if(divSelect.classList.contains('top')){
-                            divSelect.classList.remove('top')
-                            let inverter = marginBottom
-                            marginBottom = marginTop
-                            marginTop = inverter
-                        }
-                        if(divSelect.classList.contains('bottom')){
-                            divSelect.classList.remove('bottom')
-                        }
-
-                        const time = parseFloat( window.getComputedStyle(container).transitionDuration ) * 1000
-
-                        setTimeout(() => {
-                            container.style.bottom = ''
-                            container.style.marginTop = marginTop + 'px'
-                            container.style.marginBottom = marginBottom + 'px'
-                        }, time);
-
-                    }
-                    else{
-                        
-                        const top = searchInput.getBoundingClientRect().top;
-                        const bottom = searchInput.getBoundingClientRect().bottom;
-                        const height = bottom - top;
-            
-                        const pageTop = window.scrollY;
-                        const pageBottom = window.scrollY + window.innerHeight;
-            
-                        const distanceTop = top - pageTop;
-                        const distanceBottom = pageBottom - bottom;
-
-                        const marginTop = parseFloat( window.getComputedStyle(container).marginTop )
-                        const marginBottom = parseFloat( window.getComputedStyle(container).marginBottom )
-
-                        container.style.removeProperty('border-width')
-                        container.style.zIndex = 10000
-                        container.style.visibility = 'visible'
-
-                        if (distanceBottom > distanceTop) {
-                            container.style.maxHeight = (distanceBottom - marginTop - 30) + 'px';
-                            divSelect.classList.add('bottom')
-                        } else if (distanceBottom < distanceTop) {
-                            container.style.maxHeight = (distanceTop - marginBottom - 30) + 'px';
-                            container.style.bottom = height + 'px';
-                            container.style.marginTop = marginBottom + 'px'
-                            container.style.marginBottom = marginTop + 'px'
-                            divSelect.classList.add('top')
-                        } else {
-                            container.style.maxHeight = (distanceBottom - marginTop - 30) + 'px';
-                            divSelect.classList.add('bottom')
-                        }
-
-                        divSelect.classList.add('open')
-
-                        const time = parseFloat( window.getComputedStyle(container).transitionDuration ) * 1000
-
-                        setTimeout(() => {
-                            container.style.overflowY = 'auto'
-                        }, time);
-
-                    }
-
-                }
-
-            })
-
-            searchInput.addEventListener('input', () => {
-
-                if(!divSelect.classList.contains('open') && !this.#mobileState()){
-                    searchInput.click()
-                }
-
-                const regex = new RegExp('\\n+|\\t+|\\s+', '')
-                const sivalue = searchInput.value.trim()
-                const options = Array.from( container.querySelectorAll('.selectJS-option') )
-
-                if(sivalue.replace(regex, '') === ''){
-
-                    options.map((option) => {
-                        option.style.display = 'block'
-                    })
-
-                }
-                else{
-
-                    options.map((option) => {
-                        const text = option.textContent.toLowerCase().trim()
-                        if(text.includes(sivalue.toLowerCase())){
-                            option.style.display = 'block'
-                        }
-                        else{
-                            option.style.display = 'none'
-                        }
-                    })
+            if(children.nodeName === 'OPTGROUP'){
                 
-                }
-
-            })
-
-            searchInput.addEventListener('change', () => {
-
-                if(divSelect.classList.contains('open') && !this.#mobileState()){
-                    searchInput.click()
-                }
-
-                const regex = new RegExp('\\n+|\\t+|\\s+', '')
+                let optgdiv = document.createElement('div')
                 
-                if(searchInput.value.replace(regex, '') === ''){
-                    searchInput.value = ''
-                    searchInputModal.value = ''
-                    hiddenInput.value = ''
+                optgdiv.setAttribute('class', 'selectJS-optgroup')
+
+                let optgdivModal = document.createElement('div')
+                
+                optgdivModal.setAttribute('class', 'selectJS-modalOptgroup')
+                
+                let attr = children.getAttributeNames()
+
+                attr.map((atr) => {
+                    optgdiv.setAttribute(atr, children.getAttribute(atr))
+                    optgdivModal.setAttribute(atr, children.getAttribute(atr))
+                })
+
+                if(children.hasAttribute('label')){
+                    let p = document.createElement('p')
+                    p.setAttribute('class', 'selectJS-optgroupTitle')
+                    let textNode = document.createTextNode(children.getAttribute('label'))
+                    p.append(textNode)
+                    optgdiv.append(p)
+                    p = document.createElement('p')
+                    p.setAttribute('class', 'selectJS-modalOptgroupTitle')
+                    textNode = document.createTextNode(children.getAttribute('label'))
+                    p.append(textNode)
+                    optgdivModal.append(p)
                 }
-                else{
 
-                    const options = Array.from( container.querySelectorAll('.selectJS-option') )
+                if(children.querySelector('option') !== null){
 
-                    if(options.length > 0){
+                    let option = Array.from( children.querySelectorAll('option') )
 
-                        const sivalue = searchInput.value.trim()
+                    option.map((opt) => {
 
-                        for(let i=0; i<options.length; i++){
-                            
-                            if(sivalue.toLowerCase() === options[i].textContent.toLowerCase().trim()){
-                                searchInput.value = options[i].textContent
-                                hiddenInput.value = options[i].getAttribute('value')
-                                break;
+                        let optdiv = document.createElement('div')
+
+                        optdiv.setAttribute('class', 'selectJS-option')
+
+                        let optdivModal = document.createElement('div')
+
+                        optdivModal.setAttribute('class', 'selectJS-modalOption')
+
+                        let attr = opt.getAttributeNames()
+
+                        attr.map((atr) => {
+                            if(atr === 'selected'){
+                                searchInput.value = opt.textContent
+                                hiddenInput.value = opt.value
+                                optdiv.setAttribute(atr, opt.getAttribute(atr))
+                                optdivModal.setAttribute(atr, opt.getAttribute(atr))
                             }
                             else{
-                                searchInput.value = ''
-                                searchInputModal.value = ''
+                                optdiv.setAttribute(atr, opt.getAttribute(atr))
+                                optdivModal.setAttribute(atr, opt.getAttribute(atr))
                             }
+                        })
+                       
+                        let textContent = document.createTextNode(opt.textContent)
+                        optdiv.append(textContent)
 
-                        }
+                        textContent = document.createTextNode(opt.textContent)
+                        optdivModal.append(textContent)
 
-                    }
-                    else{
-                        searchInput.value = ''
-                        searchInputModal.value = ''
-                        hiddenInput.value = '' 
-                    }
+                        optgdiv.append(optdiv)
+                        optgdivModal.append(optdivModal)
 
-                }
-
-            })
-
-            const optdiv = Array.from( container.querySelectorAll('.selectJS-option') )
-
-            optdiv.map((option) => {
-
-                option.addEventListener('click', () => {
-    
-                    searchInput.value = option.textContent
-                    searchInputModal.value = ''
-                    hiddenInput.value = option.getAttribute('value')
-                    searchInput.click()
-    
-                })
-
-            })
-
-            span.addEventListener('click', () => {
-                divModal.style.display = 'none'
-            })
-
-            searchInputModal.addEventListener('input', () => {
-
-                const regex = new RegExp('\\n+|\\t+|\\s+', '')
-                const sivalue = searchInputModal.value.trim()
-                const options = Array.from( containerModal.querySelectorAll('.selectJS-modalOption') )
-
-                if(sivalue.replace(regex, '') === ''){
-
-                    options.map((option) => {
-                        option.style.display = 'block'
                     })
+
+                    container.append(optgdiv)
+                    containerModal.append(optgdivModal)
 
                 }
                 else{
-
-                    options.map((option) => {
-                        const text = option.textContent.toLowerCase().trim()
-                        if(text.includes(sivalue.toLowerCase())){
-                            option.style.display = 'block'
-                        }
-                        else{
-                            option.style.display = 'none'
-                        }
-                    })
-                
+                    container.append(optgdiv)
+                    containerModal.append(optgdivModal)
                 }
 
-            })
+            }
+            else if(children.nodeName === 'OPTION'){
 
-            const optdivModal = Array.from( containerModal.querySelectorAll('.selectJS-modalOption') )
+                let optdiv = document.createElement('div')
 
-            optdivModal.map((option) => {
+                optdiv.setAttribute('class', 'selectJS-option')
 
-                option.addEventListener('click', () => {
-    
-                    searchInput.value = option.textContent
-                    searchInputModal.value = ''
-                    hiddenInput.value = option.getAttribute('value')
-                    span.click()
-    
+                let optdivModal = document.createElement('div')
+
+                optdivModal.setAttribute('class', 'selectJS-modalOption')
+
+                let attr = children.getAttributeNames()
+
+                attr.map((atr) => {
+
+                    if(atr === 'selected'){
+                        searchInput.value = children.textContent
+                        hiddenInput.value = children.value
+                        optdiv.setAttribute(atr, children.getAttribute(atr))
+                        optdivModal.setAttribute(atr, children.getAttribute(atr))
+                    }
+                    else{
+                        optdiv.setAttribute(atr, children.getAttribute(atr))
+                        optdivModal.setAttribute(atr, children.getAttribute(atr))
+                    }
+
                 })
+               
+                let textContent = document.createTextNode(children.textContent)
+                optdiv.append(textContent)
 
-            })
+                textContent = document.createTextNode(children.textContent)
+                optdivModal.append(textContent)
 
-            document.addEventListener('click', (event) => {
+                container.append(optdiv)
+                containerModal.append(optdivModal)
 
-                if(!this.#mobileState() && event.isTrusted){
-
-                    const openSelect = Array.from( document.querySelectorAll('.selectJS.open') )
-
-                    if(openSelect.length > 0){
-
-                        openSelect.map((select) => {
-
-                            let rect = select.getBoundingClientRect()
-
-                            let x1 = rect.left
-                            let x2 = rect.right
-                            let y1 = rect.top
-                            let y2 = rect.bottom
-                            const clickX = event.x
-                            const clickY = event.y
-
-                            let isInside = false
-
-                            if(clickX > x1 && clickX < x2 && clickY > y1 && clickY < y2){
-                                isInside = true
-                            }
-
-                            rect = select.querySelector('.selectJS-container').getBoundingClientRect()
-
-                            x1 = rect.left
-                            x2 = rect.right
-                            y1 = rect.top
-                            y2 = rect.bottom
-
-                            if(clickX > x1 && clickX < x2 && clickY > y1 && clickY < y2){
-                                isInside = true
-                            }
-
-                            if(!isInside){
-                                select.querySelector('input[type="text"]').click()
-                            }
-
-                        })
-
-                    }
-                   
-                }
-
-            })
-
-            divModal.addEventListener('click', (event) => {
-
-                if(event.isTrusted){
-
-                    let rect = modalBox.getBoundingClientRect()
-    
-                    let x1 = rect.left
-                    let x2 = rect.right
-                    let y1 = rect.top
-                    let y2 = rect.bottom
-                    const clickX = event.x
-                    const clickY = event.y
-    
-                    let isInside = false
-    
-                    if(clickX > x1 && clickX < x2 && clickY > y1 && clickY < y2){
-                        isInside = true
-                    }
-    
-                    if(!isInside){
-                        span.click()
-                    }
-                
-                }
-
-            })
-
-            document.addEventListener('keydown', (event) => {
-                if(event.key === 'Escape'){
-                    span.click()
-                }
-            })
-
-            el.replaceWith(divSelect)
+            }
 
         })
 
+        let style = ''
+
+        style = style.concat(' ', 'position: relative !important;', ' ')
+
+        divSelect.setAttribute('style', style)
+
+        style = ''
+
+        style = style.concat(' ', 'max-height: 0 !important;')
+        style = style.concat(' ', 'min-height: 0 !important;')
+        style = style.concat(' ', 'border-width: 0 !important;')
+        style = style.concat(' ', 'position: absolute !important;')
+        style = style.concat(' ', 'overflow: hidden !important;')
+        style = style.concat(' ', 'z-index: -10 !important;')
+        style = style.concat(' ', 'visibility: hidden !important;')
+        style = style.concat(' ', 'outline: 0;', ' ')
+
+        container.setAttribute('style', style)
+
+        style = ''
+        
+        style = style.concat(' ', 'display: none !important;')
+        style = style.concat(' ', 'position: fixed !important;', ' ')
+        style = style.concat(' ', 'z-index:10000 !important;', ' ')
+        style = style.concat(' ', 'left: 0 !important;', ' ')
+        style = style.concat(' ', 'top: 0 !important;', ' ')
+        style = style.concat(' ', 'width: 100% !important;', ' ')
+        style = style.concat(' ', 'min-width: 100vw !important;', ' ')
+        style = style.concat(' ', 'max-width: 100vw !important;', ' ')
+        style = style.concat(' ', 'height: 100% !important;', ' ')
+        style = style.concat(' ', 'min-height: 100vh !important;', ' ')
+        style = style.concat(' ', 'max-height: 100vh !important;', ' ')
+
+        divModal.setAttribute('style', style)
+
+        style = ''
+
+        style = style.concat(' ', 'position: relative !important;', ' ')
+
+        modalBox.setAttribute('style', style)
+
+        if(document.styleSheets.length > 0) { var i = 0; } else{ style = document.createElement('style'); }
+        
+        let styleText = ''
+        
+        styleText = '.selectJS{ \n\tbox-sizing: border-box; \n\toutline: 0; \n\twidth: 350px; margin-bottom: 20px; \n\tfont-family: Arial, sans-serif; \n}\n'
+
+        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+
+        styleText = '.selectJS input[type="text"]{ \n\toutline: 0; \n\twidth: 100%; \n\tpadding: 10px 30px 10px 8px; \n\tbox-sizing: border-box; \n\tborder: 1px solid #ccc; \n\tborder-radius: 5px; \n\tfont-size: 16px; \n\tbackground-color: #fff; \n\tcursor: pointer; \t\t-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075); \n\tbox-shadow: inset 0 1px 1px rgba(0, 0, 0, .075); \n\ttransition-duration: 200ms; \n\ttransition-timing-function: ease-in-out; \n}\n'
+
+        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+        
+        styleText = '.selectJS::after{ \n\tbox-sizing: border-box; \n\toutline: 0; \n\tcontent: "\\276E"; \n\tposition: absolute; \n\ttop: 50%; \n\tright: 10px; \n\ttransform: translateY(-50%) rotate(-90deg); \n\tpointers-events: none; \n\tfont-size: 12px; \n\tcolor: #555; \n\ttransition-duration: 200ms; \n\ttransition-timing-function: ease-in-out; \n\tpointer-events: none; \n}\n'
+
+        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+
+        styleText = '.selectJS.open::after{ \n\tbox-sizing: border-box; \n\toutline: 0; \n\ttransform: translateY(-50%) rotate(90deg); \n\ttransition-duration: 200ms; \n\ttransition-timing-function: ease-in-out; \n}\n'
+
+        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+
+        styleText = '.selectJS-container{ \n\tbox-sizing: border-box; \n\toutline: 0; \n\twidth: 100%; \n\tscrollbar-width: thin; \n\ttransition-duration: 200ms; \n\ttransition-timing-function: ease-in-out; \n}\n'
+
+        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+
+        styleText = '.selectJS.open .selectJS-container{ \n\tbox-sizing: border-box; \n\toutline: 0; \n\tborder-radius: 0 0 4px 4px; \n\tbox-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); \n\tbackground-color: #fff; \n}\n'
+
+        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+
+        styleText = '.selectJS-option{ \n\tbox-sizing: border-box; \n\tpadding: 10px; \n\tcursor: pointer; \n}\n'
+
+        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+
+        styleText = '.selectJS-option:hover{ \n\tbox-sizing: border-box; \n\tbackground-color: #f0f0f0; \n}\n'
+
+        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+
+        styleText = '.selectJS-optgroupTitle{ \n\tpadding-left: 10px; \n\tfont-weight: bold; \n}\n'
+
+        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+
+        styleText = '.selectJS-optgroup .selectJS-option{ \n\tpadding-left: 20px; \n}\n'
+
+        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+
+        styleText = '.selectJS-modal{ \n\tbox-sizing: border-box; \n\toverflow: auto; \n\tbackground-color: rgba(0, 0, 0, 0.5); \n\talign-content: center; \n}\n'
+
+        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+
+        styleText = '.selectJS-modalBox{ \n\tbox-sizing: border-box; \n\tbackground-color: #fff; \n\tmargin: auto; \n\tpadding: 20px; \n\tpadding-top: 60px; \n\tpadding-bottom: 35px; \n\tborder: 1px solid #888; \n\twidth: 75vw; \n\tmax-width: 500px; \n\tmax-height: 90vh; \n\tborder-radius: 10px; \n\tposition: relative; \n}\n'
+
+        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+
+        styleText = '.selectJS-modalClose{ \n\tcolor: #aaa; \n\tfloat: right; \n\tfont-size: 32px; \n\tfont-weight: bold; \n\tcursor: pointer; \n\tposition: absolute; \n\ttop: 10px; \n\tright: 15px; \n}\n'
+
+        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+
+        styleText = '.selectJS-modalClose:hover, .selectJS-modalClose:focus{ \n\tcolor: black; \n\ttext-decoration: none; \n}\n'
+
+        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+
+        styleText = '.selectJS-modalBox input[type="text"]{ \n\tbox-sizing: border-box; \n\twidth: 100%; \n\tpadding: 10px; \n\tborder: 1px solid #ccc; \n\tborder-radius: 5px; \n\tmargin-bottom: 10px; \n\tfont-size: 16px; \n}\n'
+
+        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+
+        styleText = '.selectJS-modalContainer{ \n\tbox-sizing: border-box; \n\tmax-height: 65vh; \n\toverflow-y: auto; \n\tscrollbar-width: thin; \n}\n'
+
+        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+
+        styleText = '.selectJS-modal .selectJS-modalOption{ \n\tbox-sizing: border-box; \n\t font-size: 20px; \n\tpadding: 25px; \n\tpadding-left: 10px; \n\tcursor: pointer; \n\tborder-top: 1px solid rgb(204, 204, 204); \n\tborder-bottom: 1px solid rgb(204, 204, 204); \n}\n'
+
+        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+
+        styleText = '.selectJS-modal .selectJS-modalOption:hover{ \n\tbox-sizing: border-box; \n\tbackground-color: #f0f0f0; \n}\n'
+
+        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+
+        styleText = '.selectJS-modal .selectJS-modalOptgroupTitle{ \n\tpadding-left: 10px; \n\t font-size: 20px; \n\tfont-weight: bold; \n}\n'
+
+        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
+
+        styleText = '.selectJS-modal .selectJS-modalOptgroup .selectJS-modalOption{ \n\tpadding-left: 20px; \n}\n'
+
+        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); document.querySelector('head').append(style);}
+
+        searchInput.addEventListener('click', () => {
+
+            if(this.#mobileState()){
+
+                if(divModal.style.display === 'none'){
+                    this.#openModal(divModal)
+                }
+
+            }
+            else{
+                
+                if(divSelect.classList.contains('open')){
+                    this.#close(container, divSelect)
+                }
+                else{
+                    this.#open(container, divSelect, searchInput)
+                }
+
+            }
+
+        })
+
+        searchInput.addEventListener('input', () => {
+
+            if(!divSelect.classList.contains('open') && !this.#mobileState()){
+                searchInput.click()
+            }
+
+            const regex = new RegExp('\\n+|\\t+|\\s+', '')
+            const sivalue = searchInput.value.trim()
+            const options = Array.from( container.querySelectorAll('.selectJS-option') )
+
+            if(sivalue.replace(regex, '') === ''){
+
+                options.map((option) => {
+                    option.style.display = 'block'
+                })
+
+            }
+            else{
+
+                options.map((option) => {
+                    const text = option.textContent.toLowerCase().trim()
+                    if(text.includes(sivalue.toLowerCase())){
+                        option.style.display = 'block'
+                    }
+                    else{
+                        option.style.display = 'none'
+                    }
+                })
+            
+            }
+
+        })
+
+        searchInput.addEventListener('change', () => {
+
+            if(divSelect.classList.contains('open') && !this.#mobileState()){
+                this.#close(container, divSelect)
+            }
+
+            const regex = new RegExp('\\n+|\\t+|\\s+', '')
+            
+            if(searchInput.value.replace(regex, '') === ''){
+                searchInput.value = ''
+                searchInputModal.value = ''
+                hiddenInput.value = ''
+            }
+            else{
+
+                const options = Array.from( container.querySelectorAll('.selectJS-option') )
+
+                if(options.length > 0){
+
+                    const sivalue = searchInput.value.trim()
+
+                    for(let i=0; i<options.length; i++){
+                        
+                        if(sivalue.toLowerCase() === options[i].textContent.toLowerCase().trim()){
+                            searchInput.value = options[i].textContent
+                            hiddenInput.value = options[i].getAttribute('value')
+                            break;
+                        }
+                        else{
+                            searchInput.value = ''
+                            searchInputModal.value = ''
+                        }
+
+                    }
+
+                }
+                else{
+                    searchInput.value = ''
+                    searchInputModal.value = ''
+                    hiddenInput.value = '' 
+                }
+
+            }
+
+        })
+
+        const optdiv = Array.from( container.querySelectorAll('.selectJS-option') )
+
+        optdiv.map((option) => {
+
+            option.addEventListener('click', () => {
+
+                searchInput.value = option.textContent
+                searchInputModal.value = ''
+                hiddenInput.value = option.getAttribute('value')
+                this.#close(container, divSelect)
+
+                let options = Array.from( containerModal.querySelectorAll('.selectJS-modalOption') )
+
+                options.map((option) => {
+                    option.style.display = 'block'
+                })
+
+                options = Array.from( container.querySelectorAll('.selectJS-option') )
+
+                options.map((option) => {
+                    option.style.display = 'block'
+                })
+
+            })
+
+        })
+
+        span.addEventListener('click', () => {
+            this.#closeModal(divModal)
+        })
+
+        searchInputModal.addEventListener('input', () => {
+
+            const regex = new RegExp('\\n+|\\t+|\\s+', '')
+            const sivalue = searchInputModal.value.trim()
+            const options = Array.from( containerModal.querySelectorAll('.selectJS-modalOption') )
+
+            if(sivalue.replace(regex, '') === ''){
+
+                options.map((option) => {
+                    option.style.display = 'block'
+                })
+
+            }
+            else{
+
+                options.map((option) => {
+                    const text = option.textContent.toLowerCase().trim()
+                    if(text.includes(sivalue.toLowerCase())){
+                        option.style.display = 'block'
+                    }
+                    else{
+                        option.style.display = 'none'
+                    }
+                })
+            
+            }
+
+        })
+
+        const optdivModal = Array.from( containerModal.querySelectorAll('.selectJS-modalOption') )
+
+        optdivModal.map((option) => {
+
+            option.addEventListener('click', () => {
+
+                searchInput.value = option.textContent
+                searchInputModal.value = ''
+                hiddenInput.value = option.getAttribute('value')
+                this.#closeModal(divModal)
+
+                let options = Array.from( containerModal.querySelectorAll('.selectJS-modalOption') )
+
+                options.map((option) => {
+                    option.style.display = 'block'
+                })
+
+                options = Array.from( container.querySelectorAll('.selectJS-option') )
+
+                options.map((option) => {
+                    option.style.display = 'block'
+                })
+
+            })
+
+        })
+
+        document.addEventListener('click', (event) => {
+
+            if(!this.#mobileState() && event.isTrusted){
+
+                const openSelect = Array.from( document.querySelectorAll('.selectJS.open') )
+
+                if(openSelect.length > 0){
+
+                    openSelect.map((select) => {
+
+                        let rect = select.getBoundingClientRect()
+
+                        let x1 = rect.left
+                        let x2 = rect.right
+                        let y1 = rect.top
+                        let y2 = rect.bottom
+                        const clickX = event.x
+                        const clickY = event.y
+
+                        let isInside = false
+
+                        if(clickX > x1 && clickX < x2 && clickY > y1 && clickY < y2){
+                            isInside = true
+                        }
+
+                        rect = select.querySelector('.selectJS-container').getBoundingClientRect()
+
+                        x1 = rect.left
+                        x2 = rect.right
+                        y1 = rect.top
+                        y2 = rect.bottom
+
+                        if(clickX > x1 && clickX < x2 && clickY > y1 && clickY < y2){
+                            isInside = true
+                        }
+
+                        if(!isInside){
+                            this.#close(container, divSelect)
+                        }
+
+                    })
+
+                }
+               
+            }
+
+        })
+
+        divModal.addEventListener('click', (event) => {
+
+            if(event.isTrusted){
+
+                let rect = modalBox.getBoundingClientRect()
+
+                let x1 = rect.left
+                let x2 = rect.right
+                let y1 = rect.top
+                let y2 = rect.bottom
+                const clickX = event.x
+                const clickY = event.y
+
+                let isInside = false
+
+                if(clickX > x1 && clickX < x2 && clickY > y1 && clickY < y2){
+                    isInside = true
+                }
+
+                if(!isInside){
+                    this.#closeModal(divModal)
+                }
+            
+            }
+
+        })
+
+        document.addEventListener('keydown', (event) => {
+            if(event.key === 'Escape'){
+                this.#closeModal(divModal)
+            }
+        }) 
+
+        if(!divSelect.classList.contains('selectJS')){
+            divSelect.setAttribute('class', 'selectJS')
+        }
+
+        el.replaceWith(divSelect)
+
+    }
+
+    static #open(container, divSelect, searchInput){
+
+        const top = searchInput.getBoundingClientRect().top;
+        const bottom = searchInput.getBoundingClientRect().bottom;
+        const height = bottom - top;
+
+        const pageTop = window.scrollY;
+        const pageBottom = window.scrollY + window.innerHeight;
+
+        const distanceTop = top - pageTop;
+        const distanceBottom = pageBottom - bottom;
+
+        const marginTop = parseFloat( window.getComputedStyle(container).marginTop )
+        const marginBottom = parseFloat( window.getComputedStyle(container).marginBottom )
+
+        container.style.removeProperty('border-width')
+        container.style.zIndex = 10000
+        container.style.visibility = 'visible'
+
+        if (distanceBottom > distanceTop) {
+            container.style.maxHeight = (distanceBottom - marginTop - 30) + 'px';
+            divSelect.classList.add('bottom')
+        } else if (distanceBottom < distanceTop) {
+            container.style.maxHeight = (distanceTop - marginBottom - 30) + 'px';
+            container.style.bottom = height + 'px';
+            container.style.marginTop = marginBottom + 'px'
+            container.style.marginBottom = marginTop + 'px'
+            divSelect.classList.add('top')
+        } else {
+            container.style.maxHeight = (distanceBottom - marginTop - 30) + 'px';
+            divSelect.classList.add('bottom')
+        }
+
+        divSelect.classList.add('open')
+
+        const time = parseFloat( window.getComputedStyle(container).transitionDuration ) * 1000
+
+        setTimeout(() => {
+            container.style.overflowY = 'auto'
+        }, time);
+
+    }
+
+    static #openModal(divModal){
+        divModal.style.display = 'block'
+    }
+
+    static #close(container, divSelect){
+
+        container.borderWidth = 0
+        container.style.zIndex = -10
+        container.style.visibility = 'hidden'
+        container.style.maxHeight = 0
+        container.style.overflowY = 'hidden'
+
+        let marginTop = parseFloat( window.getComputedStyle(container).marginTop )
+        let marginBottom = parseFloat( window.getComputedStyle(container).marginBottom )
+
+        divSelect.classList.remove('open')
+        if(divSelect.classList.contains('top')){
+            divSelect.classList.remove('top')
+            let inverter = marginBottom
+            marginBottom = marginTop
+            marginTop = inverter
+        }
+        if(divSelect.classList.contains('bottom')){
+            divSelect.classList.remove('bottom')
+        }
+
+        const time = parseFloat( window.getComputedStyle(container).transitionDuration ) * 1000
+
+        setTimeout(() => {
+            container.style.bottom = ''
+            container.style.marginTop = marginTop + 'px'
+            container.style.marginBottom = marginBottom + 'px'
+        }, time);
+
+    }
+
+    static #closeModal(divModal){
+        divModal.style.display = 'none'
     }
 
     static #mobileState(){
