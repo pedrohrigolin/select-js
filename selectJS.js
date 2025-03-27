@@ -14,19 +14,25 @@ class selectJS {
         const selects = Array.from( document.querySelectorAll('select.selectJS') )
 
         selects.map((el) => {
-            this.#contructModal(el)
+            this.#contruct(el)
         })
 
     }
 
     static element(el){
-        this.#contructModal(el)
+        if(el.nodeName === 'SELECT'){
+            this.#contruct(el)
+        }
+        else{
+            console.error("The HTML element is not of the select type")
+        }
     }
 
-    static #contructModal(el){
+    static #contruct(el){
 
         let hiddenInput = document.createElement('input')
         hiddenInput.setAttribute('type', 'hidden')
+        hiddenInput.setAttribute('class', 'selectJS-hiddenInput')
         
         if(el.hasAttribute('name')){
             hiddenInput.setAttribute('name', el.getAttribute('name'))
@@ -38,23 +44,56 @@ class selectJS {
         
         let searchInput = document.createElement('input')
         searchInput.setAttribute('type', 'text')
+        searchInput.setAttribute('class', 'selectJS-searchInput')
         searchInput.setAttribute('spellcheck', 'false')
 
         if(el.hasAttribute('placeholder')){
             searchInput.setAttribute('placeholder', el.getAttribute('placeholder'))
         }
         
+        /**
+         * Ensures all 3 elements have the `required` attribute.
+         * This is essential to guarantee the required property is fully functional,
+         * both for usage and styling purposes.
+         * The divSelect element doesn't receive required here because it automatically
+         * inherits the same attributes from the source select, making this unnecessary.
+         */
         if(el.required){
+            hiddenInput.required = true
             searchInput.required = true
-            el.required = false
+        }
+
+        /**  
+         * Ensures all 3 elements have the `disabled` attribute.  
+         * This guarantees the select is fully disabled—preventing option selection  
+         * and allowing proper CSS/JS `disabled` attribute handling.  
+         * The divSelect element isn't disabled here because it automatically  
+         * inherits the same attributes from the source select, making this unnecessary.  
+         */
+        if(el.disabled){
+            hiddenInput.disabled = true
+            searchInput.disabled = true
         }
 
         let searchInputModal = document.createElement('input')
         searchInputModal.setAttribute('type', 'text')
+        searchInputModal.setAttribute('class', 'selectJS-modalSearchInput')
         searchInputModal.setAttribute('spellcheck', 'false')
 
         if(el.hasAttribute('placeholder')){
             searchInputModal.setAttribute('placeholder', el.getAttribute('placeholder'))
+        }
+
+        /**
+         * Ensures all 3 elements have the `readonly` attribute.
+         * This is essential to guarantee the readonly property is fully functional,
+         * both for usage and styling purposes.
+         * The divSelect element doesn't receive readonly here because it automatically
+         * inherits the same attributes from the source select, making this unnecessary.
+         */
+        if(el.hasAttribute('readonly')){
+            searchInput.setAttribute('readonly', '')
+            hiddenInput.setAttribute('readonly', '')
         }
 
         let divSelect = document.createElement('div')
@@ -280,96 +319,14 @@ class selectJS {
 
         modalBox.setAttribute('style', style)
 
-        if(document.styleSheets.length > 0) { var i = 0; } else{ style = document.createElement('style'); }
-        
-        let styleText = ''
-        
-        styleText = '.selectJS{ \n\tbox-sizing: border-box; \n\toutline: 0; \n\twidth: 350px; margin-bottom: 20px; \n\tfont-family: Arial, sans-serif; \n}\n'
-
-        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-        styleText = '.selectJS input[type="text"]{ \n\toutline: 0; \n\twidth: 100%; \n\tpadding: 10px 30px 10px 8px; \n\tbox-sizing: border-box; \n\tborder: 1px solid #ccc; \n\tborder-radius: 5px; \n\tfont-size: 16px; \n\tbackground-color: #fff; \n\tcursor: pointer; \t\t-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075); \n\tbox-shadow: inset 0 1px 1px rgba(0, 0, 0, .075); \n\ttransition-duration: 200ms; \n\ttransition-timing-function: ease-in-out; \n}\n'
-
-        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-        
-        styleText = '.selectJS::after{ \n\tbox-sizing: border-box; \n\toutline: 0; \n\tcontent: "\\276E"; \n\tposition: absolute; \n\ttop: 50%; \n\tright: 10px; \n\ttransform: translateY(-50%) rotate(-90deg); \n\tpointers-events: none; \n\tfont-size: 12px; \n\tcolor: #555; \n\ttransition-duration: 200ms; \n\ttransition-timing-function: ease-in-out; \n\tpointer-events: none; \n}\n'
-
-        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-        styleText = '.selectJS.open::after{ \n\tbox-sizing: border-box; \n\toutline: 0; \n\ttransform: translateY(-50%) rotate(90deg); \n\ttransition-duration: 200ms; \n\ttransition-timing-function: ease-in-out; \n}\n'
-
-        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-        styleText = '.selectJS-container{ \n\tbox-sizing: border-box; \n\toutline: 0; \n\twidth: 100%; \n\tscrollbar-width: thin; \n\ttransition-duration: 200ms; \n\ttransition-timing-function: ease-in-out; \n}\n'
-
-        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-        styleText = '.selectJS.open .selectJS-container{ \n\tbox-sizing: border-box; \n\toutline: 0; \n\tborder-radius: 0 0 4px 4px; \n\tbox-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); \n\tbackground-color: #fff; \n}\n'
-
-        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-        styleText = '.selectJS-option{ \n\tbox-sizing: border-box; \n\tpadding: 10px; \n\tcursor: pointer; \n}\n'
-
-        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-        styleText = '.selectJS-option:hover{ \n\tbox-sizing: border-box; \n\tbackground-color: #f0f0f0; \n}\n'
-
-        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-        styleText = '.selectJS-optgroupTitle{ \n\tpadding-left: 10px; \n\tfont-weight: bold; \n}\n'
-
-        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-        styleText = '.selectJS-optgroup .selectJS-option{ \n\tpadding-left: 20px; \n}\n'
-
-        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-        styleText = '.selectJS-modal{ \n\tbox-sizing: border-box; \n\toverflow: auto; \n\tbackground-color: rgba(0, 0, 0, 0.5); \n\talign-content: center; \n}\n'
-
-        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-        styleText = '.selectJS-modalBox{ \n\tbox-sizing: border-box; \n\tbackground-color: #fff; \n\tmargin: auto; \n\tpadding: 20px; \n\tpadding-top: 60px; \n\tpadding-bottom: 35px; \n\tborder: 1px solid #888; \n\twidth: 75vw; \n\tmax-width: 500px; \n\tmax-height: 90vh; \n\tborder-radius: 10px; \n\tposition: relative; \n}\n'
-
-        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-        styleText = '.selectJS-modalClose{ \n\tcolor: #aaa; \n\tfloat: right; \n\tfont-size: 32px; \n\tfont-weight: bold; \n\tcursor: pointer; \n\tposition: absolute; \n\ttop: 10px; \n\tright: 15px; \n}\n'
-
-        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-        styleText = '.selectJS-modalClose:hover, .selectJS-modalClose:focus{ \n\tcolor: black; \n\ttext-decoration: none; \n}\n'
-
-        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-        styleText = '.selectJS-modalBox input[type="text"]{ \n\tbox-sizing: border-box; \n\twidth: 100%; \n\tpadding: 10px; \n\tborder: 1px solid #ccc; \n\tborder-radius: 5px; \n\tmargin-bottom: 10px; \n\tfont-size: 16px; \n}\n'
-
-        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-        styleText = '.selectJS-modalContainer{ \n\tbox-sizing: border-box; \n\tmax-height: 65vh; \n\toverflow-y: auto; \n\tscrollbar-width: thin; \n}\n'
-
-        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-        styleText = '.selectJS-modal .selectJS-modalOption{ \n\tbox-sizing: border-box; \n\t font-size: 20px; \n\tpadding: 25px; \n\tpadding-left: 10px; \n\tcursor: pointer; \n\tborder-top: 1px solid rgb(204, 204, 204); \n\tborder-bottom: 1px solid rgb(204, 204, 204); \n}\n'
-
-        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-        styleText = '.selectJS-modal .selectJS-modalOption:hover{ \n\tbox-sizing: border-box; \n\tbackground-color: #f0f0f0; \n}\n'
-
-        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-        styleText = '.selectJS-modal .selectJS-modalOptgroupTitle{ \n\tpadding-left: 10px; \n\t font-size: 20px; \n\tfont-weight: bold; \n}\n'
-
-        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); }
-
-        styleText = '.selectJS-modal .selectJS-modalOptgroup .selectJS-modalOption{ \n\tpadding-left: 20px; \n}\n'
-
-        if(document.styleSheets.length > 0) { document.styleSheets[0].insertRule(styleText, i); i++; } else{ style.append(styleText); document.querySelector('head').append(style);}
+        this.#injectStyles()
 
         searchInput.addEventListener('click', () => {
 
             if(this.#mobileState()){
 
                 if(divModal.style.display === 'none'){
-                    this.#openModal(divModal)
+                    this.#openModal(divModal, divSelect, hiddenInput, searchInput)
                 }
 
             }
@@ -379,7 +336,7 @@ class selectJS {
                     this.#close(container, divSelect)
                 }
                 else{
-                    this.#open(container, divSelect, searchInput)
+                    this.#open(container, divSelect, searchInput, hiddenInput)
                 }
 
             }
@@ -389,7 +346,7 @@ class selectJS {
         searchInput.addEventListener('input', () => {
 
             if(!divSelect.classList.contains('open') && !this.#mobileState()){
-                searchInput.click()
+                this.#open(container, divSelect, searchInput, hiddenInput)
             }
 
             const regex = new RegExp('\\n+|\\t+|\\s+', '')
@@ -553,7 +510,7 @@ class selectJS {
         })
 
         document.addEventListener('click', (event) => {
-
+            
             if(!this.#mobileState() && event.isTrusted){
 
                 const openSelect = Array.from( document.querySelectorAll('.selectJS.open') )
@@ -577,7 +534,9 @@ class selectJS {
                             isInside = true
                         }
 
-                        rect = select.querySelector('.selectJS-container').getBoundingClientRect()
+                        const selectContainer = select.querySelector('.selectJS-container')
+
+                        rect = selectContainer.getBoundingClientRect()
 
                         x1 = rect.left
                         x2 = rect.right
@@ -589,7 +548,7 @@ class selectJS {
                         }
 
                         if(!isInside){
-                            this.#close(container, divSelect)
+                            this.#close(selectContainer, select)
                         }
 
                     })
@@ -601,7 +560,7 @@ class selectJS {
         })
 
         divModal.addEventListener('click', (event) => {
-
+            
             if(event.isTrusted){
 
                 let rect = modalBox.getBoundingClientRect()
@@ -641,51 +600,305 @@ class selectJS {
 
     }
 
-    static #open(container, divSelect, searchInput){
+    static #style
 
-        const top = searchInput.getBoundingClientRect().top;
-        const bottom = searchInput.getBoundingClientRect().bottom;
-        const height = bottom - top;
+    static setStyle(style){
 
-        const pageTop = window.scrollY;
-        const pageBottom = window.scrollY + window.innerHeight;
-
-        const distanceTop = top - pageTop;
-        const distanceBottom = pageBottom - bottom;
-
-        const marginTop = parseFloat( window.getComputedStyle(container).marginTop )
-        const marginBottom = parseFloat( window.getComputedStyle(container).marginBottom )
-
-        container.style.removeProperty('border-width')
-        container.style.zIndex = 10000
-        container.style.visibility = 'visible'
-
-        if (distanceBottom > distanceTop) {
-            container.style.maxHeight = (distanceBottom - marginTop - 30) + 'px';
-            divSelect.classList.add('bottom')
-        } else if (distanceBottom < distanceTop) {
-            container.style.maxHeight = (distanceTop - marginBottom - 30) + 'px';
-            container.style.bottom = height + 'px';
-            container.style.marginTop = marginBottom + 'px'
-            container.style.marginBottom = marginTop + 'px'
-            divSelect.classList.add('top')
-        } else {
-            container.style.maxHeight = (distanceBottom - marginTop - 30) + 'px';
-            divSelect.classList.add('bottom')
+        if(typeof style === 'string'){
+            const regex = new RegExp('\\n+|\\t+|\\s+', '')
+            if(style.replace(regex, '') === ''){
+                this.#style = undefined
+            }
+            else{
+                this.#style = style
+            }
+        }
+        else{
+            console.error("The parameter passed to the setStyle() function is not of type string")
         }
 
-        divSelect.classList.add('open')
+    }
+    
+    static #injectStyles() {
 
-        const time = parseFloat( window.getComputedStyle(container).transitionDuration ) * 1000
+        let css
 
-        setTimeout(() => {
-            container.style.overflowY = 'auto'
-        }, time);
-
+        if(this.#style === undefined){
+            css = `
+              /* Main select container */
+              .selectJS{ 
+                box-sizing: border-box; 
+                outline: 0; 
+                width: 350px; 
+                margin-bottom: 20px; 
+                font-family: Arial, sans-serif; 
+              }
+          
+              /* Text input */
+              .selectJS-searchInput{ 
+                outline: 0; 
+                width: 100%; 
+                padding: 10px 30px 10px 8px; 
+                box-sizing: border-box; 
+                border: 1px solid #ccc; 
+                border-radius: 5px; 
+                font-size: 16px; 
+                background-color: #fff; 
+                cursor: pointer;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075); 
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075); 
+                transition-duration: 200ms; 
+                transition-timing-function: ease-in-out; 
+              }
+              
+              /* Dropdown arrow */
+              .selectJS::after{ 
+                box-sizing: border-box; 
+                outline: 0; 
+                content: "\\276E"; 
+                position: absolute; 
+                top: 50%; 
+                right: 10px; 
+                transform: translateY(-50%) rotate(-90deg); 
+                pointers-events: none; 
+                font-size: 12px; 
+                color: #555; 
+                transition-duration: 200ms; 
+                transition-timing-function: ease-in-out; 
+                pointer-events: none; 
+              }
+          
+              /* Open state arrow */
+              .selectJS.open::after{ 
+                box-sizing: border-box; 
+                outline: 0; 
+                transform: translateY(-50%) rotate(90deg); 
+                transition-duration: 200ms; 
+                transition-timing-function: ease-in-out; 
+              }
+          
+              /* Options container */
+              .selectJS-container{ 
+                box-sizing: border-box; 
+                outline: 0; 
+                width: 100%; 
+                scrollbar-width: thin; 
+                transition-duration: 200ms; 
+                transition-timing-function: ease-in-out; 
+              }
+          
+              /* Open options container */
+              .selectJS.open .selectJS-container{ 
+                box-sizing: border-box; 
+                outline: 0; 
+                border-radius: 0 0 4px 4px; 
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+                background-color: #fff; 
+              }
+          
+              /* Option item */
+              .selectJS-option{ 
+                box-sizing: border-box; 
+                padding: 10px; 
+                cursor: pointer; 
+              }
+          
+              /* Option hover */
+              .selectJS-option:hover{ 
+                box-sizing: border-box; 
+                background-color: #f0f0f0; 
+              }
+          
+              /* Option group title */
+              .selectJS-optgroupTitle{ 
+                padding-left: 10px; 
+                font-weight: bold; 
+              }
+          
+              /* Nested options in group */
+              .selectJS-optgroup .selectJS-option{ 
+                padding-left: 20px; 
+              }
+          
+              /* Modal backdrop */
+              .selectJS-modal{ 
+                box-sizing: border-box; 
+                overflow: auto; 
+                background-color: rgba(0, 0, 0, 0.5); 
+                align-content: center; 
+              }
+          
+              /* Modal content box */
+              .selectJS-modalBox{ 
+                box-sizing: border-box; 
+                background-color: #fff; 
+                margin: auto; 
+                padding: 20px; 
+                padding-top: 60px; 
+                padding-bottom: 35px; 
+                border: 1px solid #888; 
+                width: 75vw; 
+                max-width: 500px; 
+                max-height: 90vh; 
+                border-radius: 10px; 
+                position: relative; 
+              }
+          
+              /* Modal close button */
+              .selectJS-modalClose{ 
+                color: #aaa; 
+                float: right; 
+                font-size: 32px; 
+                font-weight: bold; 
+                cursor: pointer; 
+                position: absolute; 
+                top: 10px; 
+                right: 15px; 
+              }
+          
+              /* Close button hover */
+              .selectJS-modalClose:hover, .selectJS-modalClose:focus{ 
+                color: black; 
+                text-decoration: none; 
+              }
+          
+              /* Modal search input */
+              .selectJS-modalSearchInput{ 
+                box-sizing: border-box; 
+                width: 100%; 
+                padding: 10px; 
+                border: 1px solid #ccc; 
+                border-radius: 5px; 
+                margin-bottom: 10px; 
+                font-size: 16px; 
+              }
+          
+              /* Modal options container */
+              .selectJS-modalContainer{ 
+                box-sizing: border-box; 
+                max-height: 65vh; 
+                overflow-y: auto; 
+                scrollbar-width: thin; 
+              }
+          
+              /* Modal option item */
+              .selectJS-modal .selectJS-modalOption{ 
+                box-sizing: border-box; 
+                font-size: 20px; 
+                padding: 25px; 
+                padding-left: 10px; 
+                cursor: pointer; 
+                border-top: 1px solid rgb(204, 204, 204); 
+                border-bottom: 1px solid rgb(204, 204, 204); 
+              }
+          
+              /* Modal option hover */
+              .selectJS-modal .selectJS-modalOption:hover{ 
+                box-sizing: border-box; 
+                background-color: #f0f0f0; 
+              }
+          
+              /* Modal group title */
+              .selectJS-modal .selectJS-modalOptgroupTitle{ 
+                padding-left: 10px; 
+                font-size: 20px; 
+                font-weight: bold; 
+              }
+          
+              /* Modal nested options */
+              .selectJS-modal .selectJS-modalOptgroup .selectJS-modalOption{ 
+                padding-left: 20px; 
+              }
+            `;
+        }
+        else{
+            css = this.#style
+        }
+      
+        // Inject styles if not already present
+        if (!document.querySelector('style[data-selectjs]')) {
+          const style = document.createElement('style');
+          style.setAttribute('data-selectjs', '');
+          style.textContent = css;
+          document.head.appendChild(style);
+        }
+        
     }
 
-    static #openModal(divModal){
-        divModal.style.display = 'block'
+    static #open(container, divSelect, searchInput, hiddenInput){
+        
+        /**  
+         * Ensures all 3 elements have the `disabled` attribute.  
+         * This guarantees the select is fully disabled—preventing option selection  
+         * and allowing proper CSS/JS `disabled` attribute handling.  
+         */  
+        if(divSelect.hasAttribute('disabled') || hiddenInput.disabled || searchInput.disabled){
+            divSelect.setAttribute('disabled', '')
+            hiddenInput.disabled = true
+            searchInput = true
+        }
+        else{
+
+            const top = searchInput.getBoundingClientRect().top;
+            const bottom = searchInput.getBoundingClientRect().bottom;
+            const height = bottom - top;
+    
+            const pageTop = window.scrollY;
+            const pageBottom = window.scrollY + window.innerHeight;
+    
+            const distanceTop = top - pageTop;
+            const distanceBottom = pageBottom - bottom;
+    
+            const marginTop = parseFloat( window.getComputedStyle(container).marginTop )
+            const marginBottom = parseFloat( window.getComputedStyle(container).marginBottom )
+    
+            container.style.removeProperty('border-width')
+            container.style.zIndex = 10000
+            container.style.visibility = 'visible'
+    
+            if (distanceBottom > distanceTop) {
+                container.style.maxHeight = (distanceBottom - marginTop - 30) + 'px';
+                divSelect.classList.add('bottom')
+            } else if (distanceBottom < distanceTop) {
+                container.style.maxHeight = (distanceTop - marginBottom - 30) + 'px';
+                container.style.bottom = height + 'px';
+                container.style.marginTop = marginBottom + 'px'
+                container.style.marginBottom = marginTop + 'px'
+                divSelect.classList.add('top')
+            } else {
+                container.style.maxHeight = (distanceBottom - marginTop - 30) + 'px';
+                divSelect.classList.add('bottom')
+            }
+    
+            divSelect.classList.add('open')
+    
+            const time = parseFloat( window.getComputedStyle(container).transitionDuration ) * 1000
+    
+            setTimeout(() => {
+                container.style.overflowY = 'auto'
+            }, time);
+            
+        }
+            
+    }
+
+    static #openModal(divModal, divSelect, hiddenInput, searchInput){
+
+        /**  
+         * Ensures all 3 elements have the `disabled` attribute.  
+         * This guarantees the select is fully disabled—preventing option selection  
+         * and allowing proper CSS/JS `disabled` attribute handling.  
+         */  
+        if(divSelect.hasAttribute('disabled') || hiddenInput.disabled || searchInput.disabled){
+            divSelect.setAttribute('disabled', '')
+            hiddenInput.disabled = true
+            searchInput = true
+        }
+        else{
+            divModal.style.display = 'block'
+            divModal.classList.add('open')
+        }
+
     }
 
     static #close(container, divSelect){
@@ -722,6 +935,104 @@ class selectJS {
 
     static #closeModal(divModal){
         divModal.style.display = 'none'
+        divModal.classList.remove('open')
+    }
+
+    static disable(select){
+
+        /**  
+         * Ensures all 3 elements have the `disabled` attribute.  
+         * This guarantees the select is fully disabled—preventing option selection  
+         * and allowing proper CSS/JS `disabled` attribute handling.  
+         */ 
+        if(select.nodeName === 'DIV' && select.classList.contains('selectJS')){
+            select.setAttribute('disabled', '')
+            select.querySelector('.selectJS-hiddenInput').disabled = true
+            select.querySelector('.selectJS-searchInput').disabled = true
+            if(select.classList.contains('open')){
+                this.#close(select.querySelector('.selectJS-container'), select)
+            }
+            const selectModal = select.querySelector('.selectJS-modal')
+            if(selectModal.classList.contains('open')){
+                this.#closeModal(selectModal)
+            }
+        }
+        else if(select.nodeName !== 'DIV'){
+            console.error("The chosen element doesn't match the required selectJS div structure.")
+        }
+        else if(!select.classList.contains('selectJS')){
+            console.error("Invalid selection: Target is not a selectJS element")
+        }
+        else{
+            console.error("Failed to disable selectJS element")
+        }
+
+    }
+
+    static enable(select){
+
+        /**  
+         * Ensures all 3 elements have the `enable` attribute.  
+         * This guarantees the select is fully disabled—preventing option selection  
+         * and allowing proper CSS/JS `enable` attribute handling.  
+         */ 
+        if(select.nodeName === 'DIV' && select.classList.contains('selectJS')){
+            select.removeAttribute('disabled')
+            select.querySelector('.selectJS-hiddenInput').disabled = false
+            select.querySelector('.selectJS-searchInput').disabled = false
+        }
+        else if(select.nodeName !== 'DIV'){
+            console.error("The chosen element doesn't match the required selectJS div structure.")
+        }
+        else if(!select.classList.contains('selectJS')){
+            console.error("Invalid selection: Target is not a selectJS element")
+        }
+        else{
+            console.error("Failed to enable selectJS element")
+        }
+
+    }
+
+    static required(select, state){
+
+        if(select.nodeName === 'DIV' && select.classList.contains('selectJS')){
+
+            if(typeof state === 'boolean'){
+
+                /**
+                 * Ensures all 3 elements have the `required` attribute.
+                 * This is essential to guarantee the required property is fully functional,
+                 * both for usage and styling purposes.
+                 * The divSelect element doesn't receive required here because it automatically
+                 * inherits the same attributes from the source select, making this unnecessary.
+                 */
+                if(state){
+                    select.setAttribute('required', '')
+                    select.querySelector('.selectJS-hiddenInput').required = true
+                    select.querySelector('.selectJS-searchInput').required = true
+                }
+                else{
+                    select.removeAttribute('required', '')
+                    select.querySelector('.selectJS-hiddenInput').required = false
+                    select.querySelector('.selectJS-searchInput').required = false
+                }
+
+            }
+            else{
+                console.error("TypeError: state parameter must be a boolean.")
+            }
+
+        }
+        else if(select.nodeName !== 'DIV'){
+            console.error("The chosen element doesn't match the required selectJS div structure.")
+        }
+        else if(!select.classList.contains('selectJS')){
+            console.error("Invalid selection: Target is not a selectJS element")
+        }
+        else{
+            console.error("Failed to set or unset required property selectJS element")
+        }
+
     }
 
     static #mobileState(){
