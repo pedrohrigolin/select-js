@@ -157,8 +157,16 @@
 
             document.addEventListener('create', (event) => {
 
-                event.target.addEventListener('change', () => {
-                    
+                event.target.addEventListener('change', (event) => {
+
+                    console.log(event)
+
+                })
+
+                event.target.addEventListener('selectJS.change', (event) => {
+
+                    console.log(event)
+
                 })
 
             })

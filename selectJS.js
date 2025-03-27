@@ -383,11 +383,14 @@ class selectJS {
             }
 
             const regex = new RegExp('\\n+|\\t+|\\s+', '')
+
+            let oldValue = hiddenInput.value
             
             if(searchInput.value.replace(regex, '') === ''){
                 searchInput.value = ''
                 searchInputModal.value = ''
                 hiddenInput.value = ''
+                newValue = ''
             }
             else{
 
@@ -422,6 +425,20 @@ class selectJS {
 
             }
 
+            let newValue = hiddenInput.value
+
+            const changeEvent = new CustomEvent('selectJS.change', {
+                bubbles: true,
+                cancelable: false, 
+                detail: {
+                    target: hiddenInput,
+                    oldValue: oldValue,
+                    newValue: newValue,
+                }
+            });
+
+            hiddenInput.dispatchEvent(changeEvent)
+
         })
 
         const optdiv = Array.from( container.querySelectorAll('.selectJS-option') )
@@ -429,6 +446,8 @@ class selectJS {
         optdiv.map((option) => {
 
             option.addEventListener('click', () => {
+
+                let oldValue = hiddenInput.value
 
                 searchInput.value = option.textContent
                 searchInputModal.value = ''
@@ -446,6 +465,22 @@ class selectJS {
                 options.map((option) => {
                     option.style.display = 'block'
                 })
+
+                divSelect.dispatchEvent(new Event('change'))
+
+                let newValue = hiddenInput.value
+
+                const changeEvent = new CustomEvent('selectJS.change', {
+                    bubbles: true,
+                    cancelable: false, 
+                    detail: {
+                        target: hiddenInput,
+                        oldValue: oldValue,
+                        newValue: newValue,
+                    }
+                });
+    
+                hiddenInput.dispatchEvent(changeEvent)
 
             })
 
@@ -490,6 +525,8 @@ class selectJS {
 
             option.addEventListener('click', () => {
 
+                let oldValue = hiddenInput.value
+
                 searchInput.value = option.textContent
                 searchInputModal.value = ''
                 hiddenInput.value = option.getAttribute('value')
@@ -506,6 +543,22 @@ class selectJS {
                 options.map((option) => {
                     option.style.display = 'block'
                 })
+
+                divSelect.dispatchEvent(new Event('change'))
+
+                let newValue = hiddenInput.value
+
+                const changeEvent = new CustomEvent('selectJS.change', {
+                    bubbles: true,
+                    cancelable: false, 
+                    detail: {
+                        target: hiddenInput,
+                        oldValue: oldValue,
+                        newValue: newValue,
+                    }
+                });
+    
+                hiddenInput.dispatchEvent(changeEvent)
 
             })
 
@@ -1044,10 +1097,12 @@ class selectJS {
     static setValue(select, value){
 
         if(select.nodeName === 'DIV' && select.classList.contains('selectJS')){
-            
+
             let hiddenInput = select.querySelector('.selectJS-hiddenInput')
             let searchInput = select.querySelector('.selectJS-searchInput')
             let searchInputModal = select.querySelector('.selectJS-modalSearchInput')
+
+            let oldValue = hiddenInput.value
 
             if(value === undefined || value === null){
                 value = ''
@@ -1108,6 +1163,22 @@ class selectJS {
                 }
 
             }
+
+            select.dispatchEvent(new Event('change'))
+
+            let newValue = hiddenInput.value
+
+            const changeEvent = new CustomEvent('selectJS.change', {
+                bubbles: true,
+                cancelable: false, 
+                detail: {
+                    target: hiddenInput,
+                    oldValue: oldValue,
+                    newValue: newValue,
+                }
+            });
+
+            hiddenInput.dispatchEvent(changeEvent)
 
         }
         else if(select.nodeName !== 'DIV'){
