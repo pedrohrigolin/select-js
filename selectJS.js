@@ -594,6 +594,15 @@ class selectJS {
             }
         }) 
 
+        window.addEventListener('resize', () => {
+            if(divSelect.classList.contains('open')){
+                this.#close(container, divSelect)
+            }
+            if(divModal.classList.contains('open')){
+                this.#closeModal(divModal)
+            }
+        })
+
         if(!divSelect.classList.contains('selectJS')){
             divSelect.setAttribute('class', 'selectJS')
         }
