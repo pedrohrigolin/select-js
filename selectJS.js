@@ -620,6 +620,25 @@ class selectJS {
         }
 
     }
+
+    static #rules
+
+    static addStyle(style){
+
+        if(typeof style === 'string'){
+            const regex = new RegExp('\\n+|\\t+|\\s+', '')
+            if(style.replace(regex, '') === ''){
+                this.#rules = undefined
+            }
+            else{
+                this.#rules = style
+            }
+        }
+        else{
+            console.error("The parameter passed to the addStyle() function is not of type string")
+        }
+
+    }
     
     static #injectStyles() {
 
@@ -812,6 +831,11 @@ class selectJS {
                 padding-left: 20px; 
               }
             `;
+
+            if(this.#rules !== undefined){
+                css = css.concat('\n', this.#rules)
+            }
+
         }
         else{
             css = this.#style
