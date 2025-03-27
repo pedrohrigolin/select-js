@@ -592,6 +592,12 @@ class selectJS {
             if(event.key === 'Escape'){
                 this.#closeModal(divModal)
             }
+            else if(event.key === 'ArrowDown'){
+
+            }
+            else if(event.key === 'ArrowUp'){
+
+            }
         }) 
 
         window.addEventListener('resize', () => {
@@ -608,6 +614,14 @@ class selectJS {
         }
 
         el.replaceWith(divSelect)
+
+        const createEvent = new CustomEvent('create', {
+            bubbles: true,
+            cancelable : false,
+            target: divSelect,
+        });
+
+        divSelect.dispatchEvent(createEvent)
 
     }
 

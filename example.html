@@ -155,6 +155,15 @@
 
         <script>
 
+            document.addEventListener('create', (event) => {
+
+                event.target.addEventListener('change', () => {
+                    
+                })
+
+            })
+
+
             //Selecting all <select> elements with the .selectJS class
             selectJS.all()
 
@@ -166,7 +175,7 @@
             const secondEl = document.querySelectorAll('select')[0]
             
             selectJS.element(secondEl)
-            
+    
         </script>
 
     </body>
