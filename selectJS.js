@@ -1003,8 +1003,6 @@ class selectJS {
                  * Ensures all 3 elements have the `required` attribute.
                  * This is essential to guarantee the required property is fully functional,
                  * both for usage and styling purposes.
-                 * The divSelect element doesn't receive required here because it automatically
-                 * inherits the same attributes from the source select, making this unnecessary.
                  */
                 if(state){
                     select.setAttribute('required', '')
@@ -1030,7 +1028,47 @@ class selectJS {
             console.error("Invalid selection: Target is not a selectJS element")
         }
         else{
-            console.error("Failed to set or unset required property selectJS element")
+            console.error("Failed to set/unset required property on selectJS element")
+        }
+
+    }
+
+    static readonly(select, state){
+
+        if(select.nodeName === 'DIV' && select.classList.contains('selectJS')){
+
+            if(typeof state === 'boolean'){
+
+                /**
+                 * Ensures all 3 elements have the `readonly` attribute.
+                 * This is essential to guarantee the readonly property is fully functional,
+                 * both for usage and styling purposes.
+                 */
+                if(state){
+                    select.setAttribute('readonly', '')
+                    select.querySelector('.selectJS-hiddenInput').setAttribute('readonly', '')
+                    select.querySelector('.selectJS-searchInput').setAttribute('readonly', '')
+                }
+                else{
+                    select.removeAttribute('readonly', '')
+                    select.querySelector('.selectJS-hiddenInput').removeAttribute('readonly', '')
+                    select.querySelector('.selectJS-searchInput').removeAttribute('readonly', '')
+                }
+
+            }
+            else{
+                console.error("TypeError: state parameter must be a boolean.")
+            }
+
+        }
+        else if(select.nodeName !== 'DIV'){
+            console.error("The chosen element doesn't match the required selectJS div structure.")
+        }
+        else if(!select.classList.contains('selectJS')){
+            console.error("Invalid selection: Target is not a selectJS element")
+        }
+        else{
+            console.error("Failed to set/unset readonly property on selectJS element")
         }
 
     }
