@@ -652,7 +652,7 @@ class selectJS {
                 outline: 0; 
                 width: 350px; 
                 margin-bottom: 20px; 
-                font-family: Arial, sans-serif; 
+                font-family: sans-serif, monospace; 
               }
           
               /* Text input */
@@ -664,6 +664,8 @@ class selectJS {
                 border: 1px solid #ccc; 
                 border-radius: 5px; 
                 font-size: 16px; 
+                font-weight: 500;
+                color: #555;
                 background-color: #fff; 
                 cursor: pointer;
                 -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075); 
@@ -681,8 +683,8 @@ class selectJS {
                 top: 50%; 
                 right: 10px; 
                 transform: translateY(-50%) rotate(-90deg); 
-                pointers-events: none; 
-                font-size: 12px; 
+                pointer-events: none; 
+                font-size: 14px; 
                 color: #555; 
                 transition-duration: 200ms; 
                 transition-timing-function: ease-in-out; 
@@ -696,6 +698,19 @@ class selectJS {
                 transform: translateY(-50%) rotate(90deg); 
                 transition-duration: 200ms; 
                 transition-timing-function: ease-in-out; 
+              }
+
+              /* Disabled select */
+              .selectJS-searchInput[disabled] {
+                cursor: not-allowed;
+                opacity: 0.7;
+                background-color: #F5F5F5;
+                border-color: #DDD;
+              }
+
+              /* Disabled select arrow */
+              .selectJS[disabled]::after{
+                opacity: 0.5;
               }
           
               /* Options container */
@@ -722,6 +737,8 @@ class selectJS {
                 box-sizing: border-box; 
                 padding: 10px; 
                 cursor: pointer; 
+                color: #555;
+                font-weight: 500;
               }
           
               /* Option hover */
@@ -734,6 +751,7 @@ class selectJS {
               .selectJS-optgroupTitle{ 
                 padding-left: 10px; 
                 font-weight: bold; 
+                color: #555;
               }
           
               /* Nested options in group */
@@ -769,7 +787,7 @@ class selectJS {
               .selectJS-modalClose{ 
                 color: #aaa; 
                 float: right; 
-                font-size: 32px; 
+                font-size: 28px; 
                 font-weight: bold; 
                 cursor: pointer; 
                 position: absolute; 
@@ -792,6 +810,8 @@ class selectJS {
                 border-radius: 5px; 
                 margin-bottom: 10px; 
                 font-size: 16px; 
+                font-weight: 500;
+                color: #555;
               }
           
               /* Modal options container */
@@ -806,6 +826,8 @@ class selectJS {
               .selectJS-modal .selectJS-modalOption{ 
                 box-sizing: border-box; 
                 font-size: 20px; 
+                font-weight: 500;
+                color: #555;
                 padding: 25px; 
                 padding-left: 10px; 
                 cursor: pointer; 
@@ -824,6 +846,7 @@ class selectJS {
                 padding-left: 10px; 
                 font-size: 20px; 
                 font-weight: bold; 
+                color: #555;
               }
           
               /* Modal nested options */
