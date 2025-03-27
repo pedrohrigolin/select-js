@@ -1119,6 +1119,23 @@ class selectJS {
 
     }
 
+    static getValue(select){
+
+        if(select.nodeName === 'DIV' && select.classList.contains('selectJS')){
+            return select.querySelector('.selectJS-hiddenInput').value
+        }
+        else if(select.nodeName !== 'DIV'){
+            console.error("The chosen element doesn't match the required selectJS div structure.")
+        }
+        else if(!select.classList.contains('selectJS')){
+            console.error("Invalid selection: Target is not a selectJS element")
+        }
+        else{
+            console.error("Could not assign the provided value to selectJS element.")
+        }
+
+    }
+
     static #mobileState(){
         const md = new MobileDetect(window.navigator.userAgent);
         if(md.mobile() !== null || window.innerWidth <= 768){
