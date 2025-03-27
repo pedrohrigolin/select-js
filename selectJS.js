@@ -1073,6 +1073,52 @@ class selectJS {
 
     }
 
+    /**
+     * Assigns a value to the selectJS component.
+     * Use the `text` parameter to set an alternate display value in 
+     * `searchInput` (e.g., an alias matching the option element's textContent).
+     *
+     * @author	Pedro Rigolin
+     * @param	mixed	select	
+     * @param	mixed	value 	
+     * @param	mixed	text  	Default: null
+     * @return	void
+     */
+    static setValue(select, value, text = null){
+
+        if(select.nodeName === 'DIV' && select.classList.contains('selectJS')){
+
+            value = value.toString()
+            select.querySelector('.selectJS-hiddenInput').value = value
+            if(text !== null){
+                text = text.toString()
+                select.querySelector('.selectJS-searchInput').value = text
+            }
+            else{
+                select.querySelector('.selectJS-searchInput').value = value
+            }
+
+            if(select.classList.contains('open')){
+                this.#close(select.querySelector('.selectJS-container'), select)
+            }
+            const selectModal = select.querySelector('.selectJS-modal')
+            if(selectModal.classList.contains('open')){
+                this.#closeModal(selectModal)
+            }
+
+        }
+        else if(select.nodeName !== 'DIV'){
+            console.error("The chosen element doesn't match the required selectJS div structure.")
+        }
+        else if(!select.classList.contains('selectJS')){
+            console.error("Invalid selection: Target is not a selectJS element")
+        }
+        else{
+            console.error("Could not assign the provided value to selectJS element.")
+        }
+
+    }
+
     static #mobileState(){
         const md = new MobileDetect(window.navigator.userAgent);
         if(md.mobile() !== null || window.innerWidth <= 768){
