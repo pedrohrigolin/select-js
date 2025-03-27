@@ -815,7 +815,6 @@ class selectJS {
             css = this.#style
         }
       
-        // Inject styles if not already present
         if (!document.querySelector('style[data-selectjs]')) {
           const style = document.createElement('style');
           style.setAttribute('data-selectjs', '');
@@ -1133,6 +1132,55 @@ class selectJS {
         else{
             console.error("Could not assign the provided value to selectJS element.")
         }
+
+    }
+
+    static getAllValues({ keyType = 'name', includeAll = false } = {}) {
+
+        const VALID_KEY_TYPES = new Set(['name', 'id']);
+        const VALID_INCLUDE_ALL = new Set(['true', 'false', true, false]);
+
+        if (typeof keyType === 'string') {
+            keyType = keyType.toLowerCase().trim();
+        }
+        if (!VALID_KEY_TYPES.has(keyType)) {
+            console.warn(`Warning: Invalid keyType "${keyType}". Valid options are: ${Array.from(VALID_KEY_TYPES).join(', ')}. Defaulting to 'name'.`);
+            keyType = 'name';
+        }
+
+        if (typeof includeAll === 'string') {
+            includeAll = includeAll.toLowerCase().trim();
+            if (includeAll === 'true') includeAll = true;
+            else if (includeAll === 'false') includeAll = false;
+        }
+        if (!VALID_INCLUDE_ALL.has(includeAll)) {
+            console.warn(`Warning: includeAll must be a boolean. Received: ${typeof includeAll}. Defaulting to false.`);
+            includeAll = false;
+        }
+    
+        return Array.from(document.querySelectorAll('div.selectJS .selectJS-hiddenInput')).map(select => {
+            const id = select.getAttribute('id');
+            const name = select.getAttribute('name');
+            const value = select.value;
+    
+            if (includeAll) {
+                const missing = [];
+                if (id === null) missing.push('id');
+                if (name === null) missing.push('name');
+                if (missing.length > 0) {
+                    console.warn(`Warning: Missing attributes: ${missing.join(', ')} in element:`, select);
+                }
+                return { id, name, value };
+            }
+
+            if ((keyType === 'id' && id === null) || (keyType === 'name' && name === null)) {
+                console.warn(`Warning: Missing "${keyType}" attribute in element:`, select);
+            }
+    
+            return keyType === 'id' 
+                ? { [id || 'unnamed']: value }
+                : { [name || 'unnamed']: value };
+        });
 
     }
 
