@@ -202,16 +202,34 @@ class selectJS {
 
                         let attr = opt.getAttributeNames()
 
+                        let selectedOption = false
+                        
+                        let defaultOption = false
+
+                        let defaultValue
+
+                        let defaultText
+
                         attr.map((atr) => {
                             if(atr === 'selected'){
                                 searchInput.value = opt.textContent
                                 hiddenInput.value = opt.value
                                 optdiv.setAttribute(atr, opt.getAttribute(atr))
                                 optdivModal.setAttribute(atr, opt.getAttribute(atr))
+                                selectedOption = true
                             }
                             else{
                                 optdiv.setAttribute(atr, opt.getAttribute(atr))
                                 optdivModal.setAttribute(atr, opt.getAttribute(atr))
+                                if(atr === 'default'){
+                                    defaultOption = true
+                                    defaultValue = opt.value
+                                    defaultText = opt.textContent
+                                }
+                            }
+                            if(!selectedOption && defaultOption){
+                                searchInput.value = defaultText
+                                hiddenInput.value = defaultValue
                             }
                         })
                        
@@ -385,10 +403,16 @@ class selectJS {
             let oldValue = hiddenInput.value
             
             if(searchInput.value.replace(regex, '') === ''){
-                searchInput.value = ''
-                searchInputModal.value = ''
-                hiddenInput.value = ''
-                newValue = ''
+                if(container.querySelector('.selectJS-option[default]') !== null){
+                    searchInput.value = container.querySelector('.selectJS-option[default]').textContent
+                    searchInputModal.value = ''
+                    hiddenInput.value = container.querySelector('.selectJS-option[default]').value
+                }
+                else{
+                    searchInput.value = ''
+                    searchInputModal.value = ''
+                    hiddenInput.value = ''
+                }
             }
             else{
 
@@ -398,12 +422,15 @@ class selectJS {
 
                     const sivalue = searchInput.value.trim()
 
+                    let found = false
+
                     for(let i=0; i<options.length; i++){
                         
                         if(sivalue.toLowerCase() === options[i].textContent.toLowerCase().trim()){
                             searchInput.value = options[i].textContent
                             searchInputModal.value = ''
                             hiddenInput.value = options[i].getAttribute('value')
+                            found = true
                             break;
                         }
                         else{
@@ -412,6 +439,16 @@ class selectJS {
                             hiddenInput.value = '' 
                         }
 
+                    }
+
+                    if(!found){
+
+                        if(container.querySelector('.selectJS-option[default]') !== null){
+                            searchInput.value = container.querySelector('.selectJS-option[default]').textContent
+                            searchInputModal.value = ''
+                            hiddenInput.value = container.querySelector('.selectJS-option[default]').value
+                        }
+                    
                     }
 
                 }
@@ -430,6 +467,7 @@ class selectJS {
                 cancelable: false, 
                 detail: {
                     target: divSelect,
+                    input: hiddenInput,
                     oldValue: oldValue,
                     newValue: newValue,
                 }
@@ -473,6 +511,7 @@ class selectJS {
                     cancelable: false, 
                     detail: {
                         target: divSelect,
+                        input: hiddenInput,
                         oldValue: oldValue,
                         newValue: newValue,
                     }
@@ -551,6 +590,7 @@ class selectJS {
                     cancelable: false, 
                     detail: {
                         target: divSelect,
+                        input: hiddenInput,
                         oldValue: oldValue,
                         newValue: newValue,
                     }
@@ -1111,9 +1151,16 @@ class selectJS {
             const regex = new RegExp('\\n+|\\t+|\\s+', '')
             
             if(value.replace(regex, '') === ''){
-                searchInput.value = ''
-                searchInputModal.value = ''
-                hiddenInput.value = ''
+                if(select.querySelector('.selectJS-option[default]') !== null){
+                    searchInput.value = select.querySelector('.selectJS-option[default]').textContent
+                    searchInputModal.value = ''
+                    hiddenInput.value = select.querySelector('.selectJS-option[default]').value
+                }
+                else{
+                    searchInput.value = ''
+                    searchInputModal.value = ''
+                    hiddenInput.value = ''
+                }
             }
             else{
 
@@ -1131,13 +1178,6 @@ class selectJS {
                             searchInput.value = options[i].textContent
                             searchInputModal.value = ''
                             hiddenInput.value = value
-                            if(select.classList.contains('open')){
-                                this.#close(select.querySelector('.selectJS-container'), select)
-                            }
-                            const selectModal = select.querySelector('.selectJS-modal')
-                            if(selectModal.classList.contains('open')){
-                                this.#closeModal(selectModal)
-                            }
                             found = true
                             break;
                         }
@@ -1150,6 +1190,11 @@ class selectJS {
                     }
 
                     if(!found){
+                        if(select.querySelector('.selectJS-option[default]') !== null){
+                            searchInput.value = select.querySelector('.selectJS-option[default]').textContent
+                            searchInputModal.value = ''
+                            hiddenInput.value = select.querySelector('.selectJS-option[default]').value
+                        }
                         console.error("Invalid value!")
                     }
 
@@ -1162,6 +1207,14 @@ class selectJS {
 
             }
 
+            if(select.classList.contains('open')){
+                this.#close(select.querySelector('.selectJS-container'), select)
+            }
+            const selectModal = select.querySelector('.selectJS-modal')
+            if(selectModal.classList.contains('open')){
+                this.#closeModal(selectModal)
+            }
+
             select.dispatchEvent(new Event('change'))
 
             let newValue = hiddenInput.value
@@ -1170,13 +1223,14 @@ class selectJS {
                 bubbles: true,
                 cancelable: false, 
                 detail: {
-                    target: hiddenInput,
+                    target: select,
+                    input: hiddenInput,
                     oldValue: oldValue,
                     newValue: newValue,
                 }
             });
 
-            hiddenInput.dispatchEvent(changeEvent)
+            select.dispatchEvent(changeEvent)
 
         }
         else if(select.nodeName !== 'DIV'){
