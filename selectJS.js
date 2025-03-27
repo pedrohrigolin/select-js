@@ -401,12 +401,14 @@ class selectJS {
                         
                         if(sivalue.toLowerCase() === options[i].textContent.toLowerCase().trim()){
                             searchInput.value = options[i].textContent
+                            searchInputModal.value = ''
                             hiddenInput.value = options[i].getAttribute('value')
                             break;
                         }
                         else{
                             searchInput.value = ''
                             searchInputModal.value = ''
+                            hiddenInput.value = '' 
                         }
 
                     }
@@ -824,119 +826,6 @@ class selectJS {
         
     }
 
-    static #open(container, divSelect, searchInput, hiddenInput){
-        
-        /**  
-         * Ensures all 3 elements have the `disabled` attribute.  
-         * This guarantees the select is fully disabled—preventing option selection  
-         * and allowing proper CSS/JS `disabled` attribute handling.  
-         */  
-        if(divSelect.hasAttribute('disabled') || hiddenInput.disabled || searchInput.disabled){
-            divSelect.setAttribute('disabled', '')
-            hiddenInput.disabled = true
-            searchInput = true
-        }
-        else{
-
-            const top = searchInput.getBoundingClientRect().top;
-            const bottom = searchInput.getBoundingClientRect().bottom;
-            const height = bottom - top;
-    
-            const pageTop = window.scrollY;
-            const pageBottom = window.scrollY + window.innerHeight;
-    
-            const distanceTop = top - pageTop;
-            const distanceBottom = pageBottom - bottom;
-    
-            const marginTop = parseFloat( window.getComputedStyle(container).marginTop )
-            const marginBottom = parseFloat( window.getComputedStyle(container).marginBottom )
-    
-            container.style.removeProperty('border-width')
-            container.style.zIndex = 10000
-            container.style.visibility = 'visible'
-    
-            if (distanceBottom > distanceTop) {
-                container.style.maxHeight = (distanceBottom - marginTop - 30) + 'px';
-                divSelect.classList.add('bottom')
-            } else if (distanceBottom < distanceTop) {
-                container.style.maxHeight = (distanceTop - marginBottom - 30) + 'px';
-                container.style.bottom = height + 'px';
-                container.style.marginTop = marginBottom + 'px'
-                container.style.marginBottom = marginTop + 'px'
-                divSelect.classList.add('top')
-            } else {
-                container.style.maxHeight = (distanceBottom - marginTop - 30) + 'px';
-                divSelect.classList.add('bottom')
-            }
-    
-            divSelect.classList.add('open')
-    
-            const time = parseFloat( window.getComputedStyle(container).transitionDuration ) * 1000
-    
-            setTimeout(() => {
-                container.style.overflowY = 'auto'
-            }, time);
-            
-        }
-            
-    }
-
-    static #openModal(divModal, divSelect, hiddenInput, searchInput){
-
-        /**  
-         * Ensures all 3 elements have the `disabled` attribute.  
-         * This guarantees the select is fully disabled—preventing option selection  
-         * and allowing proper CSS/JS `disabled` attribute handling.  
-         */  
-        if(divSelect.hasAttribute('disabled') || hiddenInput.disabled || searchInput.disabled){
-            divSelect.setAttribute('disabled', '')
-            hiddenInput.disabled = true
-            searchInput = true
-        }
-        else{
-            divModal.style.display = 'block'
-            divModal.classList.add('open')
-        }
-
-    }
-
-    static #close(container, divSelect){
-
-        container.borderWidth = 0
-        container.style.zIndex = -10
-        container.style.visibility = 'hidden'
-        container.style.maxHeight = 0
-        container.style.overflowY = 'hidden'
-
-        let marginTop = parseFloat( window.getComputedStyle(container).marginTop )
-        let marginBottom = parseFloat( window.getComputedStyle(container).marginBottom )
-
-        divSelect.classList.remove('open')
-        if(divSelect.classList.contains('top')){
-            divSelect.classList.remove('top')
-            let inverter = marginBottom
-            marginBottom = marginTop
-            marginTop = inverter
-        }
-        if(divSelect.classList.contains('bottom')){
-            divSelect.classList.remove('bottom')
-        }
-
-        const time = parseFloat( window.getComputedStyle(container).transitionDuration ) * 1000
-
-        setTimeout(() => {
-            container.style.bottom = ''
-            container.style.marginTop = marginTop + 'px'
-            container.style.marginBottom = marginBottom + 'px'
-        }, time);
-
-    }
-
-    static #closeModal(divModal){
-        divModal.style.display = 'none'
-        divModal.classList.remove('open')
-    }
-
     static disable(select){
 
         /**  
@@ -1074,8 +963,7 @@ class selectJS {
 
     /**
      * Assigns a value to the selectJS component.
-     * Use the `text` parameter to set an alternate display value in 
-     * `searchInput` (e.g., an alias matching the option element's textContent).
+     * Passing undefined/null removes the current value.
      *
      * @author	Pedro Rigolin
      * @param	mixed	select	
@@ -1083,26 +971,72 @@ class selectJS {
      * @param	mixed	text  	Default: null
      * @return	void
      */
-    static setValue(select, value, text = null){
+    static setValue(select, value){
 
         if(select.nodeName === 'DIV' && select.classList.contains('selectJS')){
+            
+            let hiddenInput = select.querySelector('.selectJS-hiddenInput')
+            let searchInput = select.querySelector('.selectJS-searchInput')
+            let searchInputModal = select.querySelector('.selectJS-modalSearchInput')
+
+            if(value === undefined || value === null){
+                value = ''
+            }
 
             value = value.toString()
-            select.querySelector('.selectJS-hiddenInput').value = value
-            if(text !== null){
-                text = text.toString()
-                select.querySelector('.selectJS-searchInput').value = text
+
+            const regex = new RegExp('\\n+|\\t+|\\s+', '')
+            
+            if(value.replace(regex, '') === ''){
+                searchInput.value = ''
+                searchInputModal.value = ''
+                hiddenInput.value = ''
             }
             else{
-                select.querySelector('.selectJS-searchInput').value = value
-            }
 
-            if(select.classList.contains('open')){
-                this.#close(select.querySelector('.selectJS-container'), select)
-            }
-            const selectModal = select.querySelector('.selectJS-modal')
-            if(selectModal.classList.contains('open')){
-                this.#closeModal(selectModal)
+                const options = Array.from( select.querySelectorAll('.selectJS-option') )
+
+                if(options.length > 0){
+
+                    let found = false
+
+                    const sivalue = value.trim()
+
+                    for(let i=0; i<options.length; i++){
+                        
+                        if(sivalue.toLowerCase() === options[i].getAttribute('value').toLowerCase().trim()){
+                            searchInput.value = options[i].textContent
+                            searchInputModal.value = ''
+                            hiddenInput.value = value
+                            if(select.classList.contains('open')){
+                                this.#close(select.querySelector('.selectJS-container'), select)
+                            }
+                            const selectModal = select.querySelector('.selectJS-modal')
+                            if(selectModal.classList.contains('open')){
+                                this.#closeModal(selectModal)
+                            }
+                            found = true
+                            break;
+                        }
+                        else{
+                            searchInput.value = ''
+                            searchInputModal.value = ''
+                            hiddenInput.value = '' 
+                        }
+
+                    }
+
+                    if(!found){
+                        console.error("Invalid value!")
+                    }
+
+                }
+                else{
+                    searchInput.value = ''
+                    searchInputModal.value = ''
+                    hiddenInput.value = '' 
+                }
+
             }
 
         }
@@ -1182,6 +1116,119 @@ class selectJS {
                 : { [name || 'unnamed']: value };
         });
 
+    }
+
+    static #open(container, divSelect, searchInput, hiddenInput){
+        
+        /**  
+         * Ensures all 3 elements have the `disabled` attribute.  
+         * This guarantees the select is fully disabled—preventing option selection  
+         * and allowing proper CSS/JS `disabled` attribute handling.  
+         */  
+        if(divSelect.hasAttribute('disabled') || hiddenInput.disabled || searchInput.disabled){
+            divSelect.setAttribute('disabled', '')
+            hiddenInput.disabled = true
+            searchInput = true
+        }
+        else{
+
+            const top = searchInput.getBoundingClientRect().top;
+            const bottom = searchInput.getBoundingClientRect().bottom;
+            const height = bottom - top;
+    
+            const pageTop = window.scrollY;
+            const pageBottom = window.scrollY + window.innerHeight;
+    
+            const distanceTop = top - pageTop;
+            const distanceBottom = pageBottom - bottom;
+    
+            const marginTop = parseFloat( window.getComputedStyle(container).marginTop )
+            const marginBottom = parseFloat( window.getComputedStyle(container).marginBottom )
+    
+            container.style.removeProperty('border-width')
+            container.style.zIndex = 10000
+            container.style.visibility = 'visible'
+    
+            if (distanceBottom > distanceTop) {
+                container.style.maxHeight = (distanceBottom - marginTop - 30) + 'px';
+                divSelect.classList.add('bottom')
+            } else if (distanceBottom < distanceTop) {
+                container.style.maxHeight = (distanceTop - marginBottom - 30) + 'px';
+                container.style.bottom = height + 'px';
+                container.style.marginTop = marginBottom + 'px'
+                container.style.marginBottom = marginTop + 'px'
+                divSelect.classList.add('top')
+            } else {
+                container.style.maxHeight = (distanceBottom - marginTop - 30) + 'px';
+                divSelect.classList.add('bottom')
+            }
+    
+            divSelect.classList.add('open')
+    
+            const time = parseFloat( window.getComputedStyle(container).transitionDuration ) * 1000
+    
+            setTimeout(() => {
+                container.style.overflowY = 'auto'
+            }, time);
+            
+        }
+            
+    }
+
+    static #openModal(divModal, divSelect, hiddenInput, searchInput){
+
+        /**  
+         * Ensures all 3 elements have the `disabled` attribute.  
+         * This guarantees the select is fully disabled—preventing option selection  
+         * and allowing proper CSS/JS `disabled` attribute handling.  
+         */  
+        if(divSelect.hasAttribute('disabled') || hiddenInput.disabled || searchInput.disabled){
+            divSelect.setAttribute('disabled', '')
+            hiddenInput.disabled = true
+            searchInput = true
+        }
+        else{
+            divModal.style.display = 'block'
+            divModal.classList.add('open')
+        }
+
+    }
+
+    static #close(container, divSelect){
+
+        container.borderWidth = 0
+        container.style.zIndex = -10
+        container.style.visibility = 'hidden'
+        container.style.maxHeight = 0
+        container.style.overflowY = 'hidden'
+
+        let marginTop = parseFloat( window.getComputedStyle(container).marginTop )
+        let marginBottom = parseFloat( window.getComputedStyle(container).marginBottom )
+
+        divSelect.classList.remove('open')
+        if(divSelect.classList.contains('top')){
+            divSelect.classList.remove('top')
+            let inverter = marginBottom
+            marginBottom = marginTop
+            marginTop = inverter
+        }
+        if(divSelect.classList.contains('bottom')){
+            divSelect.classList.remove('bottom')
+        }
+
+        const time = parseFloat( window.getComputedStyle(container).transitionDuration ) * 1000
+
+        setTimeout(() => {
+            container.style.bottom = ''
+            container.style.marginTop = marginTop + 'px'
+            container.style.marginBottom = marginBottom + 'px'
+        }, time);
+
+    }
+
+    static #closeModal(divModal){
+        divModal.style.display = 'none'
+        divModal.classList.remove('open')
     }
 
     static #mobileState(){
