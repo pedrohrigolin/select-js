@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SelectJS Demo - Demonstração Interativa</title>
+    
+    <!-- Tailwind CSS para um design limpo e responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonte Inter do Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Script selectJS carregado via CDN -->
+    <script src="./selectJS.min.js"></script>
+
+    <style>
+        /* Estilos da página de demonstração */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* bg-slate-50 */
+        }
+        .demo-panel {
+            background-color: white;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* shadow-md */
+            transition: all 0.3s ease-in-out;
+        }
+        .demo-panel:hover {
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); /* shadow-lg */
+        }
+        .control-btn, .submit-btn {
+            transition: all 0.2s ease;
+            transform: translateY(0);
+        }
+        .control-btn:hover, .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .control-btn:active, .submit-btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+        #event-log, #all-values-result {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #1e293b; /* bg-slate-800 */
+            color: #94a3b8; /* text-slate-400 */
+            border-radius: 0.5rem;
+            padding: 1rem;
+            font-size: 0.875rem;
+            min-height: 150px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        #event-log p {
+            margin: 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #334155; /* border-slate-700 */
+        }
+        #event-log p:last-child {
+            border-bottom: none;
+        }
+        .log-time { color: #64748b; } /* text-slate-500 */
+        .log-event { color: #34d399; } /* text-emerald-400 */
+        .log-target { color: #fbbf24; } /* text-amber-400 */
+        .log-detail { color: #93c5fd; } /* text-blue-300 */
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <!-- Cabeçalho -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-slate-800">
+                <span class="text-blue-600">SelectJS</span> ⚡ Demo
+            </h1>
+            <a href="https://github.com/pedrohrigolin/select-js" target="_blank" class="text-slate-500 hover:text-blue-600 transition-colors flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                <span>Ver no GitHub</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
+        <div class="text-center">
+            <h2 class="text-4xl font-extrabold text-slate-900 tracking-tight">Demonstração Interativa</h2>
+            <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Teste todas as funcionalidades da biblioteca SelectJS em tempo real, incluindo integração com formulários e métodos avançados da API.</p>
+        </div>
+
+        <!-- Seção do Formulário Principal -->
+        <div class="demo-panel p-6">
+            <h3 class="text-xl font-bold text-slate-800 mb-6 border-b pb-3">1. Integração com Formulário</h3>
+            <form id="demo-form" class="space-y-6">
+                <div>
+                    <label class="font-semibold text-slate-700 mb-2 block">Linguagem (Opcional)</label>
+                    <select class="selectJS" name="linguagem" selectJS-id="lang-id" placeholder="Escolha uma linguagem...">
+                        <option value="" default>Selecione...</option>
+                        <option value="js">JavaScript</option>
+                        <option value="py">Python</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="font-semibold text-slate-700 mb-2 block">Tecnologia (Obrigatório)</label>
+                    <select class="selectJS" name="tecnologia" selectJS-id="tech-id" placeholder="Escolha uma tecnologia..." required>
+                        <option value="">Selecione...</option>
+                        <optgroup label="Frontend">
+                            <option value="react">React</option>
+                            <option value="vue">Vue.js</option>
+                        </optgroup>
+                        <optgroup label="Backend">
+                            <option value="nodejs">Node.js</option>
+                            <option value="django">Django</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="pt-4 border-t">
+                    <button type="submit" class="submit-btn w-full px-4 py-3 bg-blue-600 text-white font-bold rounded-md hover:bg-blue-700">Enviar Formulário</button>
+                </div>
+            </form>
+            <div id="form-result" class="mt-6 text-center text-slate-700 p-4 bg-slate-100 rounded-md min-h-[60px] flex items-center justify-center transition-all duration-300">
+                <span class="text-slate-500">Aguardando envio do formulário...</span>
+            </div>
+        </div>
+
+        <!-- Seção de Exemplos Adicionais -->
+        <div class="demo-panel p-6">
+            <h3 class="text-xl font-bold text-slate-800 mb-6 border-b pb-3">2. Exemplos Adicionais</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="font-semibold text-slate-700 mb-2 block">Apenas Leitura (Readonly)</label>
+                    <p class="text-sm text-slate-500 mb-2">A busca é desabilitada, mas o valor pode ser selecionado.</p>
+                    <select class="selectJS" name="framework" selectJS-id="framework-id" readonly>
+                        <option value="net">.NET</option>
+                        <option value="laravel">Laravel</option>
+                        <option value="spring">Spring Boot</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="font-semibold text-slate-700 mb-2 block">Lista Longa (Scroll)</label>
+                    <p class="text-sm text-slate-500 mb-2">Demonstração do comportamento com muitas opções.</p>
+                    <select class="selectJS" name="pais" selectJS-id="pais-id">
+                        <option value="br">Brasil</option>
+                        <option value="us">Estados Unidos</option>
+                        <option value="ca">Canadá</option>
+                        <option value="de">Alemanha</option>
+                        <option value="jp">Japão</option>
+                        <option value="au">Austrália</option>
+                        <option value="in">Índia</option>
+                        <option value="cn">China</option>
+                        <option value="za">África do Sul</option>
+                        <option value="ar">Argentina</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção do Playground da API -->
+        <div class="demo-panel p-6">
+            <h3 class="text-xl font-bold text-slate-800 mb-6 border-b pb-3">3. Playground da API</h3>
+            <p class="text-sm text-slate-500 mb-4">Use os controles abaixo para manipular o select de "Tecnologia" no formulário acima.</p>
+            <div class="space-y-4">
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                    <button id="btn-disable" class="control-btn px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Desabilitar</button>
+                    <button id="btn-enable" class="control-btn px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">Habilitar</button>
+                    <button id="btn-required" class="control-btn px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600">Toggle Required</button>
+                    <button id="btn-readonly" class="control-btn px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600">Toggle Readonly</button>
+                </div>
+                <div class="flex items-center gap-2">
+                    <input type="text" id="value-input" placeholder="Ex: react" class="flex-grow p-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    <button id="btn-set-value" class="control-btn px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Definir Valor</button>
+                </div>
+                <button id="btn-get-value" class="control-btn w-full px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Obter Valor do Select 'Tecnologia'</button>
+            </div>
+        </div>
+
+        <!-- Seção getAllValues -->
+        <div class="demo-panel p-6">
+            <h3 class="text-xl font-bold text-slate-800 mb-6 border-b pb-3">4. Coleta de Dados em Massa</h3>
+            <p class="text-sm text-slate-500 mb-4">Clique no botão para usar `getAllValues({ includeAll: true })` e coletar os dados de **todos** os selects da página.</p>
+            <button id="btn-get-all" class="submit-btn w-full px-4 py-3 bg-teal-600 text-white font-bold rounded-md hover:bg-teal-700">Obter Todos os Valores</button>
+            <pre id="all-values-result" class="mt-4"><code class="language-json text-slate-400">// O resultado aparecerá aqui...</code></pre>
+        </div>
+
+        <!-- Seção de Log de Eventos -->
+        <div class="demo-panel p-6">
+            <h3 class="text-xl font-bold text-slate-800 mb-6 border-b pb-3">5. Log de Eventos</h3>
+            <div id="event-log"><p><span class="log-time">[--:--:--]</span> Aguardando eventos...</p></div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Inicializa todos os selects na página
+            selectJS.all();
+            
+            // 2. Seleciona os elementos para o Playground da API e Formulário
+            const techSelect = document.querySelector('.selectJS-hiddenInput[name="tecnologia"]').closest('.selectJS');
+            const demoForm = document.getElementById('demo-form');
+            const formResult = document.getElementById('form-result');
+            const valueInput = document.getElementById('value-input');
+            const eventLog = document.getElementById('event-log');
+            const allValuesResult = document.getElementById('all-values-result');
+
+            // Função para logar eventos
+            const logEvent = (eventName, detail) => {
+                const now = new Date();
+                const time = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+                const logEntry = document.createElement('p');
+                let detailString = detail ? `<span class="log-detail">${JSON.stringify(detail)}</span>` : '';
+                logEntry.innerHTML = `<span class="log-time">[${time}]</span> <span class="log-event">${eventName}</span> ${detailString}`;
+                if (eventLog.querySelector('p')?.textContent.includes('Aguardando eventos...')) eventLog.innerHTML = '';
+                eventLog.prepend(logEntry);
+            };
+
+            // 3. Adiciona funcionalidade ao formulário
+            demoForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const formData = new FormData(demoForm);
+                const linguagem = formData.get('linguagem');
+                const tecnologia = formData.get('tecnologia');
+
+                formResult.innerHTML = `
+                    <div class="text-left">
+                        <p class="font-bold text-green-600">✅ Formulário enviado com sucesso!</p>
+                        <p class="text-sm">Linguagem: <strong class="text-slate-800">${linguagem || '(não selecionado)'}</strong></p>
+                        <p class="text-sm">Tecnologia: <strong class="text-slate-800">${tecnologia}</strong></p>
+                    </div>
+                `;
+                logEvent('Form Submit', { linguagem, tecnologia });
+
+                setTimeout(() => {
+                    formResult.innerHTML = `<span class="text-slate-500">Aguardando envio do formulário...</span>`;
+                }, 4000);
+            });
+
+            // 4. Adiciona funcionalidade aos botões de controle da API
+            if (techSelect) {
+                document.getElementById('btn-disable').addEventListener('click', () => selectJS.disable(techSelect) & logEvent('API Call', { method: 'disable' }));
+                document.getElementById('btn-enable').addEventListener('click', () => selectJS.enable(techSelect) & logEvent('API Call', { method: 'enable' }));
+                
+                let isRequired = techSelect.querySelector('.selectJS-hiddenInput').required;
+                document.getElementById('btn-required').addEventListener('click', () => {
+                    isRequired = !isRequired;
+                    selectJS.required(techSelect, isRequired);
+                    logEvent('API Call', { method: 'required', state: isRequired });
+                });
+
+                let isReadonly = techSelect.hasAttribute('readonly');
+                document.getElementById('btn-readonly').addEventListener('click', () => {
+                    isReadonly = !isReadonly;
+                    selectJS.readonly(techSelect, isReadonly);
+                    logEvent('API Call', { method: 'readonly', state: isReadonly });
+                });
+
+                document.getElementById('btn-set-value').addEventListener('click', () => {
+                    const valueToSet = valueInput.value;
+                    selectJS.setValue(techSelect, valueToSet);
+                    logEvent('API Call', { method: 'setValue', value: valueToSet });
+                    valueInput.value = '';
+                });
+
+                document.getElementById('btn-get-value').addEventListener('click', () => {
+                    const value = selectJS.getValue(techSelect);
+                    alert(`O valor atual (via API) é: "${value || 'nulo'}"`);
+                    logEvent('API Call', { method: 'getValue', returned: value });
+                });
+            }
+
+            // 5. Funcionalidade do botão getAllValues
+            document.getElementById('btn-get-all').addEventListener('click', () => {
+                const allValues = selectJS.getAllValues({ includeAll: true });
+                allValuesResult.textContent = JSON.stringify(allValues, null, 2);
+                logEvent('API Call', { method: 'getAllValues', params: { includeAll: true } });
+            });
+
+            // 6. Ouve os eventos personalizados do selectJS
+            document.addEventListener('create', (e) => {
+                if (e.target.classList.contains('selectJS')) {
+                    const hiddenInput = e.target.querySelector('.selectJS-hiddenInput');
+                    const originalName = hiddenInput ? hiddenInput.name : 'N/A';
+                    logEvent('create', { targetName: originalName });
+                }
+            });
+
+            document.addEventListener('selectJS.change', (e) => {
+                logEvent('selectJS.change', e.detail);
+            });
+        });
+    </script>
+
+</body>
+</html>
