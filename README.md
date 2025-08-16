@@ -24,13 +24,23 @@ A powerful, lightweight, and highly customizable JavaScript library that transfo
 
 ## 🚀 Quick Start
 
-### Installation
+### 🚀 Installation
 
-Include the SelectJS library in your project:
+#### 📦 Via CDN (Recommended)
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/pedrohrigolin/select-js@MVP1.0.0/selectJS.min.js"></script>
+```
+
+#### 📥 Local Download
 
 ```html
 <script src="path/to/selectJS.js"></script>
 ```
+
+> 💡 **Note:** The library includes all necessary CSS styles. No additional external files required.
+
+---
 
 ### Basic Usage
 
